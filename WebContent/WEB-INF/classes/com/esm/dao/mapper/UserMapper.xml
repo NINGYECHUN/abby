@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esm.dao.UserDao">
+  <resultMap id="BaseResultMap" type="com.esm.model.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="pid" jdbcType="VARCHAR" property="pid" />
+    <result column="commission_rate" jdbcType="DOUBLE" property="commissionRate" />
+    <result column="is_admin" jdbcType="INTEGER" property="isAdmin" />
+    <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="alipay" jdbcType="VARCHAR" property="alipay" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+  <sql id="Where_Clause">
+    <where>
+       1=1 
+      <if test="map.id !=null ">
+        <![CDATA[ 
+        AND t.id = #{map.id}
+        ]]>
+      </if>
+      <if test="map.account !=null and map.account !='' ">
+        <![CDATA[ 
+        AND UPPER(t.account) like trim(UPPER(CONCAT('%',#{map.account},'%')))
+        ]]>
+      </if>
+      <if test="map.password !=null and map.password !='' ">
+        <![CDATA[ 
+        AND UPPER(t.password) like trim(UPPER(CONCAT('%',#{map.password},'%')))
+        ]]>
+      </if>
+      <if test="map.accountEq !=null and map.accountEq !='' ">
+        <![CDATA[ 
+        AND t.account = #{map.accountEq}
+        ]]>
+      </if>
+      <if test="map.passwordEq !=null and map.passwordEq !='' ">
+        <![CDATA[ 
+         AND t.password = #{map.passwordEq}
+        ]]>
+      </if>
+      <if test="map.name !=null and map.name !='' ">
+        <![CDATA[ 
+        AND UPPER(t.name) like trim(UPPER(CONCAT('%',#{map.name},'%')))
+        ]]>
+      </if>
+      <if test="map.pid !=null and map.pid !='' ">
+        <![CDATA[ 
+        AND UPPER(t.pid) like trim(UPPER(CONCAT('%',#{map.pid},'%')))
+        ]]>
+      </if>
+      <if test="map.alipay !=null and map.alipay !='' ">
+        <![CDATA[ 
+        AND UPPER(t.alipay) like trim(UPPER(CONCAT('%',#{map.alipay},'%')))
+        ]]>
+      </if>
+      <if test="map.phone !=null and map.phone !='' ">
+        <![CDATA[ 
+        AND UPPER(t.phone) like trim(UPPER(CONCAT('%',#{map.phone},'%')))
+        ]]>
+      </if>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    t.id as id, 
+    t.account as account, 
+    t.password as password, 
+    t.name as name, 
+    t.pid as pid, 
+    t.commission_rate as commission_rate, 
+    t.is_admin as is_admin, 
+    t.last_login_time as last_login_time, 
+    t.alipay as alipay, 
+    t.phone as phone
+  </sql>
+  <select id="queryByMap" parameterType="HashMap" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tm_user t
+    <if test="_parameter != null">
+      <include refid="Where_Clause" />
+    </if>
+    <if test="map.orderByClause != null">
+      order by ${map.orderByClause}
+    </if>
+    <if test="map.orderByClause == null">
+      order by t.id DESC 
+    </if>
+    limit #{page.start},#{page.limit}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tm_user t
+    where t.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tm_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.esm.model.User" useGeneratedKeys="true">
+    insert into tm_user (account, password, name, 
+      pid, commission_rate, is_admin, 
+      last_login_time, alipay, phone
+      )
+    values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{pid,jdbcType=VARCHAR}, #{commissionRate,jdbcType=DOUBLE}, #{isAdmin,jdbcType=INTEGER}, 
+      #{lastLoginTime,jdbcType=TIMESTAMP}, #{alipay,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}
+      )
+  </insert>
+  <select id="countByMap" parameterType="HashMap" resultType="java.lang.Integer">
+    select count(*) from tm_user t
+    <if test="_parameter != null">
+      <include refid="Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByMap" parameterType="HashMap" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tm_user t
+    <if test="_parameter != null">
+      <include refid="Where_Clause" />
+    </if>
+    <if test="map.orderByClause != null">
+      order by ${map.orderByClause}
+    </if>
+    <if test="map.orderByClause == null">
+      order by t.id DESC 
+    </if>
+  </select>
+  <update id="updateByPrimaryKey" parameterType="com.esm.model.User">
+    update tm_user
+    set account = #{account,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR},
+      commission_rate = #{commissionRate,jdbcType=DOUBLE},
+      is_admin = #{isAdmin,jdbcType=INTEGER},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      alipay = #{alipay,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

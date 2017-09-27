@@ -1,0 +1,131 @@
+!SESSION 2016-05-24 15:41:20.700 -----------------------------------------------
+eclipse.buildId=I20120608-1400
+java.version=1.7.0_13
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=zh_CN
+Framework arguments:  -product org.eclipse.epp.package.reporting.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.reporting.product
+
+!ENTRY org.eclipse.ui 2 2 2016-05-24 15:44:07.885
+!MESSAGE Invalid preference category path: org.jboss.tools.common.model.ui.MainPreferencePage (bundle: org.jboss.tools.common.jdt.debug.ui, page: org.jboss.tools.common.jdt.debug.ui.preferences.RemoteDebugPreferencePage)
+
+!ENTRY org.eclipse.ui 2 2 2016-05-24 15:44:07.892
+!MESSAGE Invalid preference category path: org.jboss.tools.common.model.ui.MainPreferencePage (bundle: org.jboss.tools.maven.sourcelookup.ui, page: org.jboss.tools.maven.sourcelookup.ui.preferences.SourceLookupPreferencePage)
+
+!ENTRY org.eclipse.ui 2 2 2016-05-24 15:44:07.892
+!MESSAGE Invalid preference category path: org.jboss.tools.common.model.ui.MainPreferencePage (bundle: org.jboss.tools.maven.ui, page: org.jboss.tools.maven.ui.preferences.ConfiguratorPreferencePage)
+
+!ENTRY org.eclipse.ui 2 2 2016-05-24 15:44:07.893
+!MESSAGE Invalid preference category path: org.jboss.tools.common.model.ui.MainPreferencePage (bundle: org.jboss.tools.maven.ui, page: org.jboss.tools.maven.ui.preferences.RemoteRepositoriesPreferencePage)
+
+!ENTRY org.eclipse.ui 2 2 2016-05-24 15:44:07.893
+!MESSAGE Invalid preference category path: org.jboss.tools.common.model.ui.MainPreferencePage (bundle: org.jboss.tools.runtime.ui, page: org.jboss.tools.runtime.preferences.RuntimePreferencePage)
+
+!ENTRY org.eclipse.ui 2 2 2016-05-24 15:44:07.894
+!MESSAGE Invalid preference category path: org.jboss.tools.common.model.ui.MainPreferencePage (bundle: org.jboss.tools.usage, page: org.jboss.tools.usage.analytics.preferences.UsageAnalyticsPreferencePage)
+
+!ENTRY org.eclipse.ui 2 2 2016-05-24 15:44:07.895
+!MESSAGE Invalid preference category path: org.jboss.tools.common.model.ui.MainPreferencePage (bundle: org.jboss.tools.ws.jaxrs.ui, page: org.jboss.tools.ws.jaxrs.ui)
+
+!ENTRY org.eclipse.wst.common.project.facet.core 4 0 2016-05-24 15:48:37.727
+!MESSAGE Preset preset.jboss.birt in plugin org.jboss.tools.birt.core uses unknown version "2.5.0" of facet "birt.runtime".
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.811
+!MESSAGE NLS unused message: birt.web.category.name in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.812
+!MESSAGE NLS unused message: birt.web.project.name in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.812
+!MESSAGE NLS unused message: birt.web.project.description in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.812
+!MESSAGE NLS unused message: birt.web.actionsets.description in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.813
+!MESSAGE NLS unused message: create.birt.web.module in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.813
+!MESSAGE NLS unused message: BIRT_FACET_LABEL in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.813
+!MESSAGE NLS unused message: BIRT_FACET_DESCRIPTION in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.814
+!MESSAGE NLS unused message: JSP_New_context_type_Extension_Element.name in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.814
+!MESSAGE NLS unused message: JSP_Tag_context_type_Extension_Element.name in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.814
+!MESSAGE NLS unused message: BirtResourcesDefinition in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.815
+!MESSAGE NLS unused message: birt.action.importruntime.name in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.815
+!MESSAGE NLS unused message: plugin.version in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.817
+!MESSAGE NLS unused message: birt.web.category.name in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.817
+!MESSAGE NLS unused message: birt.web.project.name in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.818
+!MESSAGE NLS unused message: birt.web.project.description in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.818
+!MESSAGE NLS unused message: birt.web.actionsets.description in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.818
+!MESSAGE NLS unused message: create.birt.web.module in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.819
+!MESSAGE NLS unused message: BIRT_FACET_LABEL in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.819
+!MESSAGE NLS unused message: BIRT_FACET_DESCRIPTION in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.819
+!MESSAGE NLS unused message: JSP_New_context_type_Extension_Element.name in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.820
+!MESSAGE NLS unused message: JSP_Tag_context_type_Extension_Element.name in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.820
+!MESSAGE NLS unused message: birtResourcesDefinition in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.820
+!MESSAGE NLS unused message: birt.action.importruntime.name in: plugin
+
+!ENTRY org.eclipse.osgi 2 1 2016-05-24 15:48:37.821
+!MESSAGE NLS unused message: runtime.version in: plugin
+!SESSION 2016-05-24 15:52:42.109 -----------------------------------------------
+eclipse.buildId=I20120608-1400
+java.version=1.7.0_13
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=zh_CN
+Framework arguments:  -product org.eclipse.epp.package.reporting.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.reporting.product
+
+!ENTRY org.eclipse.ui 2 2 2016-05-24 15:54:41.882
+!MESSAGE Invalid preference category path: org.jboss.tools.common.model.ui.MainPreferencePage (bundle: org.jboss.tools.common.jdt.debug.ui, page: org.jboss.tools.common.jdt.debug.ui.preferences.RemoteDebugPreferencePage)
+
+!ENTRY org.eclipse.ui 2 2 2016-05-24 15:54:41.886
+!MESSAGE Invalid preference category path: org.jboss.tools.common.model.ui.MainPreferencePage (bundle: org.jboss.tools.maven.sourcelookup.ui, page: org.jboss.tools.maven.sourcelookup.ui.preferences.SourceLookupPreferencePage)
+
+!ENTRY org.eclipse.ui 2 2 2016-05-24 15:54:41.886
+!MESSAGE Invalid preference category path: org.jboss.tools.common.model.ui.MainPreferencePage (bundle: org.jboss.tools.maven.ui, page: org.jboss.tools.maven.ui.preferences.ConfiguratorPreferencePage)
+
+!ENTRY org.eclipse.ui 2 2 2016-05-24 15:54:41.886
+!MESSAGE Invalid preference category path: org.jboss.tools.common.model.ui.MainPreferencePage (bundle: org.jboss.tools.maven.ui, page: org.jboss.tools.maven.ui.preferences.RemoteRepositoriesPreferencePage)
+
+!ENTRY org.eclipse.ui 2 2 2016-05-24 15:54:41.886
+!MESSAGE Invalid preference category path: org.jboss.tools.common.model.ui.MainPreferencePage (bundle: org.jboss.tools.runtime.ui, page: org.jboss.tools.runtime.preferences.RuntimePreferencePage)
+
+!ENTRY org.eclipse.ui 2 2 2016-05-24 15:54:41.887
+!MESSAGE Invalid preference category path: org.jboss.tools.common.model.ui.MainPreferencePage (bundle: org.jboss.tools.usage, page: org.jboss.tools.usage.analytics.preferences.UsageAnalyticsPreferencePage)
+
+!ENTRY org.eclipse.ui 2 2 2016-05-24 15:54:41.887
+!MESSAGE Invalid preference category path: org.jboss.tools.common.model.ui.MainPreferencePage (bundle: org.jboss.tools.ws.jaxrs.ui, page: org.jboss.tools.ws.jaxrs.ui)

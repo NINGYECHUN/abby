@@ -1,5 +1,6 @@
 package com.esm.service.impl;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,8 +74,21 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public JSONObject changePassword(Long userId, String oldPassword, String newPassword) {
+	public JSONObject doChangePassword(Long userId, String oldPassword, String newPassword1, String newPassword2) throws Exception {
 		// TODO Auto-generated method stub
+		User user = userDao.selectByPrimaryKey(userId);
+		String oldPasswordMd5 = MethodUtil.toMD5(oldPassword); 
+		if(!oldPasswordMd5.equals(user.getPassword())) {
+			throw new Exception("输入的【原密码】不正确！");
+		}
+		if(!newPassword1.equals(newPassword2)) {
+			throw new Exception("两次输入的【新密码】不一致！");
+		}
+		if(newPassword1.length() < 6) {
+			throw new Exception("新密码不能少于6位！");
+		}
+		user.setPassword(MethodUtil.toMD5(newPassword1));
+		userDao.updateByPrimaryKey(user);
 		return null;
 	}
 

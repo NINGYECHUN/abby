@@ -5,7 +5,10 @@
  */
 var menuTree = {
 		'addUserTabItem':'user.addUser',
-		'userListTabItem':'user.userList'
+		'userListTabItem':'user.userList',
+		'changePasswordItem':'user.changePassword',
+		'gatheringSettingItem':'user.gatheringSetting',
+		'withdrawMoneyItem':'money.withdrawMoney'
 };
 
 	/**
@@ -21,8 +24,13 @@ var menuTree = {
 				itemId:itemId,
 				title:title,
 				layout:'fit',
-				closeable:true,
-				items:Ext.create(pageUrl)
+				closable:true,
+				items:Ext.create(pageUrl),
+				listeners:{
+					beforedestroy:function(panel, eOpts ){
+						panel.removeAll(false);
+					}
+				}
 			});
 			tabPanel.add(item);
 		}

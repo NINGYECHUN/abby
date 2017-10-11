@@ -42,9 +42,11 @@ public interface UserService{
      * 变更密码.
      * @param userId 用户id
      * @param oldPassword 原密码
-     * @param newPassword 新密码
+     * @param newPassword1 新密码1
+     * @param newPassword2 新密码2 
+     * @throws Exception 
      */
-    public JSONObject changePassword(Long userId,String oldPassword, String newPassword);
+    public JSONObject doChangePassword(Long userId, String oldPassword, String newPassword1, String newPassword2) throws Exception;
 
     /**
      * 重置密码.

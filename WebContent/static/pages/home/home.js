@@ -30,26 +30,37 @@ Ext.onReady(function(){
 						        items:[
 						        {
 						        	xtype:'button',
-						        	text:'<font size=2>用户开户</font>',
+						        	text:'<font size=2>修改密码</font>',
 						        	height:40,
+						        	iconCls : 'fa fa-key',
 						        	width:'100%',
 						        	margin:'5 0 0 0',
-						        	itemId:'addUserTabItem',
+						        	itemId:'changePasswordItem',
 						        	handler:function(button,e){
 						        		menuTreeHandler(button,e);
 						        	}
 						        },{
 						        	xtype:'button',
-						        	text:'<font size=2>用户结算</font>',
+						        	text:'<font size=2>收款设置</font>',
 						        	height:40,
 						        	width:'100%',
-						        	margin:'5 0 0 0'
+						        	iconCls : 'fa fa-cog',
+						        	margin:'5 0 0 0',
+						        	itemId:'gatheringSettingItem',
+						        	handler:function(button,e){
+						        		menuTreeHandler(button,e);
+						        	}
 						        },{
 						        	xtype:'button',
-						        	text:'<font size=2>用户查询</font>',
+						        	text:'<font size=2>提现</font>',
 						        	height:40,
+						        	iconCls : 'fa fa-jpy',
 						        	width:'100%',
-						        	margin:'5 0 0 0'
+						        	margin:'5 0 0 0',
+						        	itemId:'withdrawMoneyItem',
+						        	handler:function(button,e){
+						        		menuTreeHandler(button,e);
+						        	}
 						        }
 						        ]
 						    }]

@@ -17,6 +17,7 @@
     <script type="text/javascript" src="${contextPath}/static/pages/home/home.js"></script>
     <script type="text/javascript" src="${contextPath}/static/js/share.js"></script>
     <script type="text/javascript" src="${contextPath}/static/pages/user/addUser.js"></script>
+    <script type="text/javascript" src="${contextPath}/static/pages/user/changePassword.js"></script>
     <script type="text/javascript">
     var baseUrl = "<%=request.getContextPath()%>";
     </script>

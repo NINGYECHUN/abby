@@ -114,5 +114,33 @@ public class UserController {
 		}
 		return jsonObj;
 	}
+	
+	/**
+	 * 用户变更密码.
+	 * @param request  请求数据
+	 * @param response 返回数据
+	 * @return 返回结果
+	 */
+	@RequestMapping(value = "/changePassword")
+	@ResponseBody
+	public JSONObject doChangePassword(HttpServletRequest request,
+			HttpServletResponse response) {
+		JSONObject jsonObj = new JSONObject();
+		Boolean success = true;
+		try{
+			User user = (User) request.getSession().getAttribute("user");
+			String oldPassword = request.getParameter("oldPassword");
+			String newPassword1 = request.getParameter("newPassword1");
+			String newPassword2 = request.getParameter("newPassword2");
+			userService.doChangePassword(user.getId(), oldPassword, newPassword1, newPassword2);
+		}catch(Exception e){
+			e.printStackTrace();
+			success = false;
+			jsonObj.put("msg", TransforUtil.deleteExceptionString(e.getMessage()));
+		}finally{
+			jsonObj.put("success", success);
+		}
+		return jsonObj;
+	}
 
 }

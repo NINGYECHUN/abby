@@ -31,8 +31,6 @@ import com.esm.service.UserService;
 import com.esm.util.Constants;
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
-import com.taobao.api.request.TbkShopGetRequest;
-import com.taobao.api.response.TbkShopGetResponse;
 
 public class UserTest extends BasicTest {
 
@@ -46,15 +44,15 @@ public class UserTest extends BasicTest {
     public void test() throws Exception{
     	
     	TaobaoClient client = new DefaultTaobaoClient(Constants.getTbUrl(), Constants.getAppKey(), Constants.getAppSecret());
-    	
-    	TbkRebateOrderGetRequest req = new TbkRebateOrderGetRequest();
+
+    	/*TbkRebateOrderGetRequest req = new TbkRebateOrderGetRequest();
     	req.setFields("tb_trade_parent_id,tb_trade_id,num_iid,item_title,item_num,price,pay_price,seller_nick,seller_shop_title,commission,commission_rate,unid,create_time,earning_time");
     	req.setStartTime(StringUtils.parseDateTime("2015-03-05 13:52:08"));
     	req.setSpan(600L);
     	req.setPageNo(1L);
     	req.setPageSize(20L);
     	TbkRebateOrderGetResponse rsp = client.execute(req);
-    	System.out.println(rsp.getBody());
+    	System.out.println(rsp.getBody());*/
     	
     	/*TaobaoClient client = new DefaultTaobaoClient("https://eco.taobao.com/router/rest",Constants.getAppKey(), Constants.getAppSecret());
     	TbkShopGetRequest req = new TbkShopGetRequest();

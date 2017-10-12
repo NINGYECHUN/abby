@@ -142,5 +142,57 @@ public class UserController {
 		}
 		return jsonObj;
 	}
+	
+	/**
+	 * 设置收款项.
+	 * @param request  请求数据
+	 * @param response 返回数据
+	 * @return 返回结果
+	 */
+	@RequestMapping(value = "/doGatheringSetting")
+	@ResponseBody
+	public JSONObject doGatheringSetting(HttpServletRequest request,
+			HttpServletResponse response) {
+		JSONObject jsonObj = new JSONObject();
+		Boolean success = true;
+		try{
+			User user = (User) request.getSession().getAttribute("user");
+			String alipay = request.getParameter("alipay");
+			String gatheringName = request.getParameter("gatheringName");
+			userService.doGatheringSetting(user.getId(), alipay, gatheringName);
+		}catch(Exception e){
+			e.printStackTrace();
+			success = false;
+			jsonObj.put("msg", TransforUtil.deleteExceptionString(e.getMessage()));
+		}finally{
+			jsonObj.put("success", success);
+		}
+		return jsonObj;
+	}
+	
+	/**
+	 * 获取session中的用户数据.
+	 * @param request  请求数据
+	 * @param response 返回数据
+	 * @return 返回结果
+	 */
+	@RequestMapping(value = "/getUser")
+	@ResponseBody
+	public JSONObject getUserById(HttpServletRequest request,
+			HttpServletResponse response) {
+		JSONObject jsonObj = new JSONObject();
+		Boolean success = true;
+		try{
+			User user = (User) request.getSession().getAttribute("user");
+			jsonObj = MethodUtil.fromObject(userService.getUserById(user.getId()));
+		}catch(Exception e){
+			e.printStackTrace();
+			success = false;
+			jsonObj.put("msg", TransforUtil.deleteExceptionString(e.getMessage()));
+		}finally{
+			jsonObj.put("success", success);
+		}
+		return jsonObj;
+	}
 
 }

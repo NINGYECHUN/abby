@@ -64,4 +64,21 @@ public interface UserService{
      */
 	User checkIfExist(String name, String password);
 
+	/**
+	 * 设置收款设置项.
+	 * @param userId
+	 * @param alipay
+	 * @param gatheringName
+	 * @return
+	 * @throws Exception
+	 */
+	JSONObject doGatheringSetting(Long userId, String alipay, String gatheringName) throws Exception;
+
+	/**
+	 * 通过用户id获取用户信息.
+	 * @param userId
+	 * @return
+	 */
+	User getUserById(Long userId);
+
 }

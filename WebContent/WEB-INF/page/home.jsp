@@ -16,8 +16,10 @@
     <!-- The line below must be kept intact for Sencha Cmd to build your application -->
     <script type="text/javascript" src="${contextPath}/static/pages/home/home.js"></script>
     <script type="text/javascript" src="${contextPath}/static/js/share.js"></script>
-    <script type="text/javascript" src="${contextPath}/static/pages/user/addUser.js"></script>
     <script type="text/javascript" src="${contextPath}/static/pages/user/changePassword.js"></script>
+    <script type="text/javascript" src="${contextPath}/static/pages/user/gatheringSetting.js"></script>
+    <script type="text/javascript" src="${contextPath}/static/pages/money/withdrawMoneyList.js"></script>
+    <script type="text/javascript" src="${contextPath}/static/pages/money/withdrawMoneyW.js"></script>
     <script type="text/javascript">
     var baseUrl = "<%=request.getContextPath()%>";
     </script>

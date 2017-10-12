@@ -63,6 +63,16 @@ public class User {
     手机号码.
     */
     private String phone;
+    
+    /**
+     * 是否启用 1-启用 0-未启用.
+     */
+    private Integer isEnable;
+    
+    /**
+     * 收款人名称.
+     */
+    private String gatheringName;
 
     /**
     获取id(主键id)的当前值.
@@ -223,4 +233,20 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+	public Integer getIsEnable() {
+		return isEnable;
+	}
+
+	public void setIsEnable(Integer isEnable) {
+		this.isEnable = isEnable;
+	}
+
+	public String getGatheringName() {
+		return gatheringName;
+	}
+
+	public void setGatheringName(String gatheringName) {
+		this.gatheringName = gatheringName;
+	}
 }

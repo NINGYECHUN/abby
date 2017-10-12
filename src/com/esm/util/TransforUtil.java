@@ -289,20 +289,23 @@ public class TransforUtil {
 	}
 	
 	/**
-	 * 获取优先级
-	 * @param priority
+	 * 转换提现状态.
+	 * @param code
 	 * @return
 	 */
-	public static Object getPriorityName(int priority) {
-		
-		if(priority == 50) {
-			return "一般";
+	public static String transWithdrawMoneyStatus(Integer code){
+		String name = null;
+		if(code == null) {
+			return null;
+		}else if(Integer.valueOf("1").equals(code)) {
+			name = "结算中";
+		}else if(Integer.valueOf("2").equals(code)) {
+			name = "结算完成";
+		}else if(Integer.valueOf("3").equals(code)) {
+			name = "结算失败";
+		}else {
+			return code.toString();
 		}
-		
-		if(priority > 50) {
-			return "高";
-		}
-		
-		return "底";
+		return name;
 	}
 }

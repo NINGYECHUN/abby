@@ -91,6 +91,16 @@ public class UserServiceImpl implements UserService{
 		userDao.updateByPrimaryKey(user);
 		return null;
 	}
+	
+	@Override
+	public JSONObject doGatheringSetting(Long userId, String alipay, String gatheringName) throws Exception {
+		// TODO Auto-generated method stub
+		User user = userDao.selectByPrimaryKey(userId);
+		user.setAlipay(alipay);
+		user.setGatheringName(gatheringName);
+		userDao.updateByPrimaryKey(user);
+		return null;
+	}
 
 	@Override
 	public JSONObject doResetPassword(Long userId) throws Exception {
@@ -115,5 +125,16 @@ public class UserServiceImpl implements UserService{
 		condition.put("passwordEq", password);
 		List<User> userList =  userDao.selectByMap(condition);
 		return StringUtil.isEmpty(userList)?null:userList.get(0);
+	}
+	
+	/**
+	 * 通过账号密码查找用户
+	 * @param name
+	 * @param password
+	 * @return
+	 */
+	@Override
+	public User getUserById(Long userId){
+		return userDao.selectByPrimaryKey(userId);
 	}
 }

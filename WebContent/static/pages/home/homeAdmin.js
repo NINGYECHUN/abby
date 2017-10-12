@@ -45,7 +45,11 @@ Ext.onReady(function(){
 						        	iconCls : 'fa fa-money',
 						        	height:40,
 						        	width:'100%',
-						        	margin:'5 0 0 0'
+						        	margin:'5 0 0 0',
+						        	itemId:'withdrawMoneyDealItem',
+						        	handler:function(button,e){
+						        		menuTreeHandler(button,e);
+						        	}
 						        }
 						        ]
 						    }]

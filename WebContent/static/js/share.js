@@ -4,11 +4,11 @@
  * @type 
  */
 var menuTree = {
-		'addUserTabItem':'user.addUser',
 		'userListTabItem':'user.userList',
 		'changePasswordItem':'user.changePassword',
 		'gatheringSettingItem':'user.gatheringSetting',
-		'withdrawMoneyItem':'money.withdrawMoney'
+		'withdrawMoneyItem':'money.withdrawMoneyList',
+		'withdrawMoneyDealItem':'money.withdrawMoneyDealList'
 };
 
 	/**

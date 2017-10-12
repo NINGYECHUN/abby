@@ -18,6 +18,8 @@
     <script type="text/javascript" src="${contextPath}/static/js/share.js"></script>
     <script type="text/javascript" src="${contextPath}/static/pages/user/userList.js"></script>
     <script type="text/javascript" src="${contextPath}/static/pages/user/userMainW.js"></script>
+    <script type="text/javascript" src="${contextPath}/static/pages/money/withdrawMoneyDealList.js"></script>
+    <script type="text/javascript" src="${contextPath}/static/pages/money/withdrawMoneyDealW.js"></script>
     <script type="text/javascript">
     var baseUrl = "<%=request.getContextPath()%>";
     </script>

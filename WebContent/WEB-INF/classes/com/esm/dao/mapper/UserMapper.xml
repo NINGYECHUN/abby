@@ -12,6 +12,8 @@
     <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
     <result column="alipay" jdbcType="VARCHAR" property="alipay" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="is_enable" jdbcType="INTEGER" property="isEnable" />
+    <result column="gathering_name" jdbcType="INTEGER" property="gatheringName" />
   </resultMap>
   <sql id="Where_Clause">
     <where>
@@ -61,6 +63,11 @@
         AND UPPER(t.phone) like trim(UPPER(CONCAT('%',#{map.phone},'%')))
         ]]>
       </if>
+      <if test="map.isEnable !=null and map.isEnable !='' ">
+        <![CDATA[ 
+        AND t.is_enable = #{map.isEnable}
+        ]]>
+      </if>
     </where>
   </sql>
   <sql id="Base_Column_List">
@@ -73,7 +80,9 @@
     t.is_admin as is_admin, 
     t.last_login_time as last_login_time, 
     t.alipay as alipay, 
-    t.phone as phone
+    t.phone as phone,
+    t.is_enable as is_enable,
+    t.gathering_name as gathering_name
   </sql>
   <select id="queryByMap" parameterType="HashMap" resultMap="BaseResultMap">
     select
@@ -103,11 +112,13 @@
   <insert id="insert" keyProperty="id" parameterType="com.esm.model.User" useGeneratedKeys="true">
     insert into tm_user (account, password, name, 
       pid, commission_rate, is_admin, 
-      last_login_time, alipay, phone
+      last_login_time, alipay, phone,
+      is_enable,gathering_name
       )
     values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{pid,jdbcType=VARCHAR}, #{commissionRate,jdbcType=DOUBLE}, #{isAdmin,jdbcType=INTEGER}, 
-      #{lastLoginTime,jdbcType=TIMESTAMP}, #{alipay,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}
+      #{lastLoginTime,jdbcType=TIMESTAMP}, #{alipay,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+      #{isEnable,jdbcType=INTEGER},#{gatheringName,jdbcType=VARCHAR}
       )
   </insert>
   <select id="countByMap" parameterType="HashMap" resultType="java.lang.Integer">
@@ -140,7 +151,9 @@
       is_admin = #{isAdmin,jdbcType=INTEGER},
       last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
       alipay = #{alipay,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR}
+      phone = #{phone,jdbcType=VARCHAR},
+      is_admin = #{isAdmin, jdbcType=INTEGER},
+      gathering_name = #{gatheringName, jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

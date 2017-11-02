@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esm.dao.WithdrawMoneyDao">
+  <resultMap id="BaseResultMap" type="com.esm.model.WithdrawMoney">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="money_qty" jdbcType="DOUBLE" property="moneyQty" />
+    <result column="withdraw_date" jdbcType="TIMESTAMP" property="withdrawDate" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="rmk_user" jdbcType="LONGVARCHAR" property="rmkUser" />
+    <result column="rmk_admin" jdbcType="LONGVARCHAR" property="rmkAdmin" />
+    <result column="deal_date" jdbcType="TIMESTAMP" property="dealDate" />
+    <result column="deal_by" jdbcType="BIGINT" property="dealBy" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="alipay" jdbcType="VARCHAR" property="alipay" />
+    <result column="gathering_name" jdbcType="VARCHAR" property="gatheringName" />
+  </resultMap>
+  <sql id="Where_Clause">
+    <where>
+       1=1 
+      <if test="map.id !=null ">
+        <![CDATA[ 
+        AND t.id = #{map.id}
+        ]]>
+      </if>
+      <if test="map.userId !=null and map.userId !='' ">
+        <![CDATA[ 
+        AND t.user_id = #{map.userId}
+        ]]>
+      </if>
+      <if test="map.status !=null and map.status !='' ">
+        <![CDATA[ 
+        AND t.status = #{map.status}
+        ]]>
+      </if>
+      <if test="map.startDate !=null and map.startDate !='' ">
+        <![CDATA[ 
+        AND DATE_FORMAT(t.withdraw_date,'%Y-%m-%d') >= #{map.startDate}
+        ]]>
+      </if>
+      <if test="map.endDate !=null and map.endDate !='' ">
+        <![CDATA[ 
+        AND DATE_FORMAT(t.withdraw_date,'%Y-%m-%d') <= #{map.endDate}
+        ]]>
+      </if>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    t.id as id, 
+    t.user_id as user_id, 
+    t.money_qty as money_qty, 
+    t.withdraw_date as withdraw_date, 
+    t.status as status,
+    t.rmk_user as rmk_user, 
+    t.rmk_admin as rmk_admin,
+    t.deal_date as deal_date,
+    t.deal_by as deal_by
+  </sql>
+
+  <select id="queryByMap" parameterType="HashMap" resultMap="BaseResultMap">
+    select
+	    <include refid="Base_Column_List" />,
+	    u.account as account,
+	    u.name as name,
+	    u.alipay as alipay,
+	    u.gathering_name as gathering_name
+    from tt_withdraw_money t 
+    	left join tm_user u on t.user_id = u.id 
+    <if test="_parameter != null">
+      <include refid="Where_Clause" />
+    </if>
+    <if test="map.orderByClause != null">
+      order by ${map.orderByClause}
+    </if>
+    <if test="map.orderByClause == null">
+      order by t.id DESC 
+    </if>
+    limit #{page.start},#{page.limit}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tt_withdraw_money t
+    where t.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tt_withdraw_money
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.esm.model.WithdrawMoney" useGeneratedKeys="true">
+    insert into tt_withdraw_money (user_id, money_qty, withdraw_date, 
+      status, rmk_user, rmk_admin,deal_date,deal_by
+      )
+    values (#{userId,jdbcType=BIGINT}, #{moneyQty,jdbcType=DOUBLE}, #{withdrawDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{rmkUser,jdbcType=LONGVARCHAR}, #{rmkAdmin,jdbcType=LONGVARCHAR},
+      #{dealDate,jdbcType=TIMESTAMP},#{dealBy,jdbcType=BIGINT}
+      )
+  </insert>
+  <select id="countByMap" parameterType="HashMap" resultType="java.lang.Integer">
+    select count(*) from tt_withdraw_money t
+    <if test="_parameter != null">
+      <include refid="Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByMap" parameterType="HashMap" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tt_withdraw_money t
+    <if test="_parameter != null">
+      <include refid="Where_Clause" />
+    </if>
+    <if test="map.orderByClause != null">
+      order by ${map.orderByClause}
+    </if>
+    <if test="map.orderByClause == null">
+      order by t.id DESC 
+    </if>
+  </select>
+  <update id="updateByPrimaryKey" parameterType="com.esm.model.WithdrawMoney">
+    update tt_withdraw_money
+    set user_id = #{userId,jdbcType=BIGINT},
+      money_qty = #{moneyQty,jdbcType=DOUBLE},
+      withdraw_date = #{withdrawDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      rmk_user = #{rmkUser,jdbcType=LONGVARCHAR},
+      rmk_admin = #{rmkAdmin,jdbcType=LONGVARCHAR},
+      deal_date = #{dealDate,jdbcType=TIMESTAMP},
+      deal_by = #{dealBy,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

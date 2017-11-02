@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esm.dao.OrderDao">
+  <resultMap id="BaseResultMap" type="com.esm.model.Order">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="qty" jdbcType="INTEGER" property="qty" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="income_rate" jdbcType="VARCHAR" property="incomeRate" />
+    <result column="divided_rate" jdbcType="VARCHAR" property="dividedRate" />
+    <result column="payment" jdbcType="DOUBLE" property="payment" />
+    <result column="effect_estimate" jdbcType="DOUBLE" property="effectEstimate" />
+    <result column="set_amount" jdbcType="DOUBLE" property="setAmount" />
+    <result column="income_estimate" jdbcType="DOUBLE" property="incomeEstimate" />
+    <result column="commission_rate" jdbcType="VARCHAR" property="commissionRate" />
+    <result column="subsidy_amount" jdbcType="DOUBLE" property="subsidyAmount" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="media_id" jdbcType="VARCHAR" property="mediaId" />
+    <result column="media_name" jdbcType="VARCHAR" property="mediaName" />
+    <result column="adsense_id" jdbcType="VARCHAR" property="adsenseId" />
+    <result column="adsense_name" jdbcType="VARCHAR" property="adsenseName" />
+    <result column="import_date" jdbcType="TIMESTAMP" property="importDate" />
+    <result column="import_by" jdbcType="BIGINT" property="importBy" />
+  </resultMap>
+  <sql id="Where_Clause">
+    <where>
+       1=1 
+      <if test="map.id !=null ">
+        <![CDATA[ 
+        AND t.id = #{map.id}
+        ]]>
+      </if>
+      <if test="map.goodsName !=null and map.goodsName !='' ">
+        <![CDATA[ 
+        AND UPPER(t.goods_name) like trim(UPPER(CONCAT('%',#{map.goodsName},'%')))
+        ]]>
+      </if>
+      <if test="map.status !=null and map.status !='' ">
+        <![CDATA[ 
+        AND t.status = #{map.status}
+        ]]>
+      </if>
+      <if test="map.incomeRate !=null and map.incomeRate !='' ">
+        <![CDATA[ 
+        AND UPPER(t.income_rate) like trim(UPPER(CONCAT('%',#{map.incomeRate},'%')))
+        ]]>
+      </if>
+      <if test="map.dividedRate !=null and map.dividedRate !='' ">
+        <![CDATA[ 
+        AND UPPER(t.divided_rate) like trim(UPPER(CONCAT('%',#{map.dividedRate},'%')))
+        ]]>
+      </if>
+      <if test="map.commissionRate !=null and map.commissionRate !='' ">
+        <![CDATA[ 
+        AND UPPER(t.commission_rate) like trim(UPPER(CONCAT('%',#{map.commissionRate},'%')))
+        ]]>
+      </if>
+      <if test="map.orderNo !=null and map.orderNo !='' ">
+        <![CDATA[ 
+        AND UPPER(t.order_no) like trim(UPPER(CONCAT('%',#{map.orderNo},'%')))
+        ]]>
+      </if>
+      <if test="map.orderNoEq !=null and map.orderNoEq !='' ">
+        <![CDATA[ 
+        AND t.order_no = #{map.orderNoEq}
+        ]]>
+      </if>
+      <if test="map.mediaId !=null and map.mediaId !='' ">
+        <![CDATA[ 
+        AND UPPER(t.media_id) like trim(UPPER(CONCAT('%',#{map.mediaId},'%')))
+        ]]>
+      </if>
+      <if test="map.mediaName !=null and map.mediaName !='' ">
+        <![CDATA[ 
+        AND UPPER(t.media_name) like trim(UPPER(CONCAT('%',#{map.mediaName},'%')))
+        ]]>
+      </if>
+      <if test="map.adsenseId !=null and map.adsenseId !='' ">
+        <![CDATA[ 
+        AND UPPER(t.adsense_id) like trim(UPPER(CONCAT('%',#{map.adsenseId},'%')))
+        ]]>
+      </if>
+      <if test="map.adsenseName !=null and map.adsenseName !='' ">
+        <![CDATA[ 
+        AND UPPER(t.adsense_name) like trim(UPPER(CONCAT('%',#{map.adsenseName},'%')))
+        ]]>
+      </if>
+      <if test="map.importBy !=null ">
+        <![CDATA[ 
+        AND t.import_by = #{map.importBy}
+        ]]>
+      </if>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    t.id as id, 
+    t.create_date as create_date, 
+    t.goods_name as goods_name, 
+    t.qty as qty, 
+    t.price as price, 
+    t.status as status, 
+    t.income_rate as income_rate, 
+    t.divided_rate as divided_rate, 
+    t.payment as payment, 
+    t.effect_estimate as effect_estimate, 
+    t.set_amount as set_amount, 
+    t.income_estimate as income_estimate, 
+    t.commission_rate as commission_rate, 
+    t.subsidy_amount as subsidy_amount, 
+    t.order_no as order_no, 
+    t.media_id as media_id, 
+    t.media_name as media_name, 
+    t.adsense_id as adsense_id, 
+    t.adsense_name as adsense_name, 
+    t.import_date as import_date, 
+    t.import_by as import_by
+  </sql>
+  <select id="queryByMap" parameterType="HashMap" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tt_order t
+    <if test="_parameter != null">
+      <include refid="Where_Clause" />
+    </if>
+    <if test="map.orderByClause != null">
+      order by ${map.orderByClause}
+    </if>
+    <if test="map.orderByClause == null">
+      order by t.id DESC 
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tt_order t
+    where t.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tt_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.esm.model.Order" useGeneratedKeys="true">
+    insert into tt_order (create_date, goods_name, qty, 
+      price, status, income_rate, 
+      divided_rate, payment, effect_estimate, 
+      set_amount, income_estimate, commission_rate, 
+      subsidy_amount, order_no, media_id, 
+      media_name, adsense_id, adsense_name, 
+      import_date, import_by)
+    values (#{createDate,jdbcType=TIMESTAMP}, #{goodsName,jdbcType=VARCHAR}, #{qty,jdbcType=INTEGER}, 
+      #{price,jdbcType=DOUBLE}, #{status,jdbcType=VARCHAR}, #{incomeRate,jdbcType=VARCHAR}, 
+      #{dividedRate,jdbcType=VARCHAR}, #{payment,jdbcType=DOUBLE}, #{effectEstimate,jdbcType=DOUBLE}, 
+      #{setAmount,jdbcType=DOUBLE}, #{incomeEstimate,jdbcType=DOUBLE}, #{commissionRate,jdbcType=VARCHAR}, 
+      #{subsidyAmount,jdbcType=DOUBLE}, #{orderNo,jdbcType=VARCHAR}, #{mediaId,jdbcType=VARCHAR}, 
+      #{mediaName,jdbcType=VARCHAR}, #{adsenseId,jdbcType=VARCHAR}, #{adsenseName,jdbcType=VARCHAR}, 
+      #{importDate,jdbcType=TIMESTAMP}, #{importBy,jdbcType=BIGINT})
+  </insert>
+  <select id="countByMap" parameterType="HashMap" resultType="java.lang.Integer">
+    select count(*) from tt_order t
+    <if test="_parameter != null">
+      <include refid="Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByMap" parameterType="HashMap" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tt_order t
+    <if test="_parameter != null">
+      <include refid="Where_Clause" />
+    </if>
+    <if test="map.orderByClause != null">
+      order by ${map.orderByClause}
+    </if>
+    <if test="map.orderByClause == null">
+      order by t.id DESC 
+    </if>
+  </select>
+  <update id="updateByPrimaryKey" parameterType="com.esm.model.Order">
+    update tt_order
+    set create_date = #{createDate,jdbcType=TIMESTAMP},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      qty = #{qty,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      status = #{status,jdbcType=VARCHAR},
+      income_rate = #{incomeRate,jdbcType=VARCHAR},
+      divided_rate = #{dividedRate,jdbcType=VARCHAR},
+      payment = #{payment,jdbcType=DOUBLE},
+      effect_estimate = #{effectEstimate,jdbcType=DOUBLE},
+      set_amount = #{setAmount,jdbcType=DOUBLE},
+      income_estimate = #{incomeEstimate,jdbcType=DOUBLE},
+      commission_rate = #{commissionRate,jdbcType=VARCHAR},
+      subsidy_amount = #{subsidyAmount,jdbcType=DOUBLE},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      media_id = #{mediaId,jdbcType=VARCHAR},
+      media_name = #{mediaName,jdbcType=VARCHAR},
+      adsense_id = #{adsenseId,jdbcType=VARCHAR},
+      adsense_name = #{adsenseName,jdbcType=VARCHAR},
+      import_date = #{importDate,jdbcType=TIMESTAMP},
+      import_by = #{importBy,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

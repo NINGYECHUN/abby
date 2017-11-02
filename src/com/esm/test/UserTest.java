@@ -31,6 +31,9 @@ import com.esm.service.UserService;
 import com.esm.util.Constants;
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
+import com.taobao.api.internal.util.StringUtils;
+import com.taobao.api.request.TbkItemGetRequest;
+import com.taobao.api.response.TbkItemGetResponse;
 
 public class UserTest extends BasicTest {
 
@@ -44,34 +47,22 @@ public class UserTest extends BasicTest {
     public void test() throws Exception{
     	
     	TaobaoClient client = new DefaultTaobaoClient(Constants.getTbUrl(), Constants.getAppKey(), Constants.getAppSecret());
-
-    	/*TbkRebateOrderGetRequest req = new TbkRebateOrderGetRequest();
-    	req.setFields("tb_trade_parent_id,tb_trade_id,num_iid,item_title,item_num,price,pay_price,seller_nick,seller_shop_title,commission,commission_rate,unid,create_time,earning_time");
-    	req.setStartTime(StringUtils.parseDateTime("2015-03-05 13:52:08"));
-    	req.setSpan(600L);
-    	req.setPageNo(1L);
-    	req.setPageSize(20L);
-    	TbkRebateOrderGetResponse rsp = client.execute(req);
-    	System.out.println(rsp.getBody());*/
     	
-    	/*TaobaoClient client = new DefaultTaobaoClient("https://eco.taobao.com/router/rest",Constants.getAppKey(), Constants.getAppSecret());
-    	TbkShopGetRequest req = new TbkShopGetRequest();
-    	req.setFields("user_id,shop_title,shop_type,seller_nick,pict_url,shop_url");
+    	TbkItemGetRequest req = new TbkItemGetRequest();
+    	req.setFields("num_iid,title,pict_url,small_images,reserve_price,zk_final_price,user_type,provcity,item_url,seller_id,volume,nick");
     	req.setQ("女装");
-    	req.setSort("commission_rate_des");
+    	req.setItemloc("杭州");
+    	req.setSort("tk_rate_des");
     	req.setIsTmall(false);
-    	req.setStartCredit(1L);
-    	req.setEndCredit(20L);
-    	req.setStartCommissionRate(2000L);
-    	req.setEndCommissionRate(123L);
-    	req.setStartTotalAction(1L);
-    	req.setEndTotalAction(100L);
-    	req.setStartAuctionCount(123L);
-    	req.setEndAuctionCount(200L);
+    	req.setIsOverseas(false);
+    	req.setStartPrice(10L);
+    	req.setEndPrice(100L);
+    	req.setStartTkRate(0L);
+    	req.setEndTkRate(123L);
     	req.setPlatform(1L);
     	req.setPageNo(1L);
     	req.setPageSize(20L);
-    	TbkShopGetResponse rsp = client.execute(req);
-    	System.out.println(rsp.getBody());*/
+    	TbkItemGetResponse rsp = client.execute(req);
+    	System.out.println(rsp.getBody());
     }
 }

@@ -34,6 +34,16 @@
         AND t.status = #{map.status}
         ]]>
       </if>
+      <if test="map.startDate !=null and map.startDate !='' ">
+        <![CDATA[ 
+        AND DATE_FORMAT(t.withdraw_date,'%Y-%m-%d') >= #{map.startDate}
+        ]]>
+      </if>
+      <if test="map.endDate !=null and map.endDate !='' ">
+        <![CDATA[ 
+        AND DATE_FORMAT(t.withdraw_date,'%Y-%m-%d') <= #{map.endDate}
+        ]]>
+      </if>
     </where>
   </sql>
   <sql id="Base_Column_List">

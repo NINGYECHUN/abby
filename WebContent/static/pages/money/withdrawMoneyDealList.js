@@ -7,76 +7,72 @@ Ext.onReady(function() {
 		extend : 'Ext.form.Panel',
 		layout : 'column',
 		autoheight:true,
+		defaults:{
+			margin:'10 0 10 0'
+		},
 		initComponent : function() {
 			var me = this;
 			Ext.apply(this, {
 				items : [{
-							// 第一列
-							xtype : "container",
-							layout : 'form',
-							defaultType : "textfield",
-							defaults : {
-								width : 100
-							},
 							labelAlign : 'right',
-							floatable : true,
-							columnWidth : 0.27,
-							items : [{
-										labelAlign : 'right',
-										fieldLabel : "开始时间",
-										xtype:'datefield',
-										name : "startDate"
-									}]
+							fieldLabel : "开始时间",
+							xtype:'datefield',
+							format:'Y-m-d',
+							name : "startDate",
+							columnWidth : 0.2
 						},{
 							// 第二列
-							xtype : "container",
-							layout : 'form',
-							// buttonAlign : 'right',
-							defaultType : "textfield",
-							defaults : {
-								width : 100
-							},
 							labelAlign : 'right',
-							floatable : true,
-							columnWidth : 0.27,
-							items : [{
-								labelAlign : 'right',
-								fieldLabel : "结束时间",
-								xtype:'datefield',
-								name : "endDate"
-							}]
+							fieldLabel : "结束时间",
+							format:'Y-m-d',
+							xtype:'datefield',
+							name : "endDate",
+							columnWidth : 0.20
 						},{
-							// 第四列
-							xtype : "container",
-							layout : 'form',
-							// buttonAlign : 'right',
-							columnWidth : 0.19,
-							floatable : true,
-							style : 'margin-left:40px;margin-top:0px',
-							items : [{
-								xtype : 'button',
-								width : 60,
-								iconCls:'fa fa-search',
-								height : 30,
-								text : '查询',
-								handler : function() {
-									var form = me.getForm();
-									var vals = form.getValues();
-									extend(withdrawMoneyStore.proxy.extraParams,vals,true);
-									withdrawMoneyStore.loadPage(1);
-								}
-							}, {
-								xtype : 'button',
-								width : 60,
-								height : 30,
-								iconCls:'fa fa-refresh',
-								margin : '0 0 0 10',
-								text : '重置',
-								handler : function() {
-									me.getForm().reset();
-								}
-							}]
-
+							xtype:'combo',
+						    fieldLabel: '状态',
+						    editable:false,
+						    labelWidth:60,
+						    columnWidth : 0.14,
+						    name:'status',
+						    labelAlign : 'right',
+						    store: Ext.create('Ext.data.Store', {
+									 fields: ['value', 'name'],
+									 data : [
+									    {"value":null, "name":"全部"},
+							   			{"value":1, "name":"结算中"},
+							   			{"value":2, "name":"结算完成"},
+							   			{"value":3, "name":"结算失败"}
+									   ]
+									}),
+						    queryMode: 'local',
+						    value:1,
+						    displayField: 'name',
+						    valueField: 'value',
+						    emptyText:'请选择...'
+						},{
+							xtype : 'button',
+							width : 60,
+							iconCls:'fa fa-search',
+							margin : '5 0 0 10',
+							height : 30,
+							text : '查询',
+							handler : function() {
+								var form = me.getForm();
+								var vals = form.getValues();
+								extend(withdrawMoneyStore.proxy.extraParams,vals,true);
+								withdrawMoneyStore.loadPage(1);
+							}
+						}, {
+							xtype : 'button',
+							width : 60,
+							height : 30,
+							iconCls:'fa fa-refresh',
+							margin : '5 0 0 10',
+							text : '重置',
+							handler : function() {
+								me.getForm().reset();
+							}
 						}]
 			});
 			this.callParent();

@@ -2,26 +2,39 @@ Ext.onReady(function(){
 	
 	Ext.define('Abby.app.user.changePassword',{
 		extend : 'Ext.form.Panel',
-		layout:'column',
+		plugins: 'responsive',
+		responsiveConfig: {  
+	        tall: {
+	        	layout:'fit'
+	        },
+	        wide:{
+	        	layout:'fit'
+	        }
+	    },
 		items:[{
-			xtype:'label',
-			html:'&nbsp;',
-			columnWidth:.1
-		},{
+			plugins: 'responsive',
+			responsiveConfig: {  
+		        tall: {
+		        	margin:'5'
+		        },
+		        wide:{
+		        	margin:'20',
+		        }
+		    },
 			xtype:'fieldset',
-			columnWidth:.8,
-			margin:'100 100 30 100',
 			title:'修改密码',
 			style:'background: #F0F0F0',
 			layout:'column',
 			defaults:{
 				xtype:'textfield',
 				columnWidth:0.9,
+				labelWidth:70,
 				labelAlign:'right',
 				margin:'10'
 			},
 			items:[{
 				fieldLabel:'原密码',
+				columnWidth:0.9,
 				name:'oldPassword',
 				inputType:'password',
 				emptyText:'请输入原来的密码',
@@ -29,6 +42,7 @@ Ext.onReady(function(){
 			},
 			{
 				fieldLabel:'新密码',
+				columnWidth:0.9,
 				name:'newPassword1',
 				inputType:'password',
 				emptyText:'请输入新密码',
@@ -36,6 +50,7 @@ Ext.onReady(function(){
 			},
 			{
 				fieldLabel:'新密码确认',
+				columnWidth:0.9,
 				name:'newPassword2',
 				inputType:'password',
 				emptyText:'请再次输入新密码',
@@ -43,11 +58,11 @@ Ext.onReady(function(){
 			},{
 				xtype:'label',
 				html:'&nbsp;',
-				columnWidth:.3
+				columnWidth:.2
 			},{
 				xtype:'button',
 				text:'确认修改',
-				columnWidth:.15,
+				columnWidth:0.3,
 				handler:function(thisButton,e){
 					
 					var form = thisButton.up("form").getForm();
@@ -80,19 +95,15 @@ Ext.onReady(function(){
 			},{
 				xtype:'button',
 				text:'清空',
-				columnWidth:.15,
+				columnWidth:0.3,
 				handler:function(thisButton,e){
 					thisButton.up("form").getForm().reset();
 				}
 			},{
 				xtype:'label',
 				html:'&nbsp;',
-				columnWidth:.3
+				columnWidth:.2
 			}]
-		},{
-			xtype:'label',
-			html:'&nbsp;',
-			columnWidth:.1
 		}],
 		 initComponent : function() {  
 			 

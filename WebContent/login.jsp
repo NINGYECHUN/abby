@@ -56,9 +56,6 @@
 			
 			#login{   
 			    position: absolute;   
-			    top: 50%;   
-			    left:50%;   
-			    margin: -150px 0 0 -150px;   
 			    width: 300px;   
 			    height: 300px;   
 			}   
@@ -281,7 +278,7 @@
 		var w=screen.width;
 		var h=screen.height;
 		document.getElementById("loginDiv").style.top = (h/2-100)+"px";
-		document.getElementById("loginDiv").style.left = (w/2-200)+"px";
+		document.getElementById("loginDiv").style.left = ((w-300)/2)+"px";
 		</script>
 		
 		<script src="./static/js/jquery-1.11.0.min.js"></script>

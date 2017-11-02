@@ -5,79 +5,106 @@ Ext.onReady(function() {
 
 	Ext.define(pageId + 'SearchPanel', {
 		extend : 'Ext.form.Panel',
-		layout : 'column',
 		autoheight:true,
+		defaults:{
+			margin:'3 0 3 0'
+		},		
+		plugins: 'responsive',
+		responsiveConfig: {  
+	        tall: {
+	        	layout:'vbox'
+	        },
+	        wide:{
+	        	layout : 'column'
+	        }
+	    },
 		initComponent : function() {
 			var me = this;
 			Ext.apply(this, {
 				items : [{
-							// 第一列
-							xtype : "container",
-							layout : 'form',
-							defaultType : "textfield",
-							defaults : {
-								width : 100
-							},
-							labelAlign : 'right',
-							floatable : true,
-							columnWidth : 0.27,
-							items : [{
-										labelAlign : 'right',
-										fieldLabel : "开始时间",
-										xtype:'datefield',
-										name : "startDate"
-									}]
+					labelAlign : 'right',
+					fieldLabel : "开始时间",
+					xtype:'datefield',
+					format:'Y-m-d',
+					name : "startDate",
+					columnWidth : 0.2
+				},{
+					// 第二列
+					labelAlign : 'right',
+					fieldLabel : "结束时间",
+					format:'Y-m-d',
+					xtype:'datefield',
+					name : "endDate",
+					columnWidth : 0.20
+				},{
+					xtype:'combo',
+				    fieldLabel: '状态',
+				    editable:false,
+				    columnWidth : 0.2,
+				    name:'status',
+				    labelAlign : 'right',
+				    store: Ext.create('Ext.data.Store', {
+							 fields: ['value', 'name'],
+							 data : [
+							    {"value":null, "name":"全部"},
+					   			{"value":1, "name":"结算中"},
+					   			{"value":2, "name":"结算完成"},
+					   			{"value":3, "name":"结算失败"}
+							   ]
+							}),
+				    queryMode: 'local',
+				    value:null,
+				    displayField: 'name',
+				    valueField: 'value',
+				    emptyText:'全部'
+				},{
+					margin:'0 0 0 0',
+					xtype:'toolbar',
+					layout:'hbox',
+					border:0,
+					plugins: 'responsive',
+					responsiveConfig: {  
+				        tall: {
+				        	columnWidth:0.9
+				        },
+				        wide:{
+				        	columnWidth:0.3
+				        }
+				    },
+					defaults:{
+						xtype : 'button',
+						width : 60,
+						margin : '0 0 0 10',
+						height : 30,
+					},
+					items:[
+						{
+							iconCls:'fa fa-search',
+							text : '查询',
+							handler : function() {
+								var form = me.getForm();
+								var vals = form.getValues();
+								extend(withdrawMoneyStore.proxy.extraParams,vals,true);
+								withdrawMoneyStore.loadPage(1);
+							}
+						}, {
+							iconCls:'fa fa-refresh',
+							text : '重置',
+							handler : function() {
+								me.getForm().reset();
+							}
 						},{
-							// 第二列
-							xtype : "container",
-							layout : 'form',
-							// buttonAlign : 'right',
-							defaultType : "textfield",
-							defaults : {
-								width : 100
-							},
-							labelAlign : 'right',
-							floatable : true,
-							columnWidth : 0.27,
-							items : [{
-								labelAlign : 'right',
-								fieldLabel : "结束时间",
-								xtype:'datefield',
-								name : "endDate"
-							}]
-						},{
-							// 第四列
-							xtype : "container",
-							layout : 'form',
-							// buttonAlign : 'right',
-							columnWidth : 0.19,
-							floatable : true,
-							style : 'margin-left:40px;margin-top:0px',
-							items : [{
-								xtype : 'button',
-								width : 60,
-								iconCls:'fa fa-search',
-								height : 30,
-								text : '查询',
-								handler : function() {
-									var form = me.getForm();
-									var vals = form.getValues();
-									extend(withdrawMoneyStore.proxy.extraParams,vals,true);
-									withdrawMoneyStore.loadPage(1);
-								}
-							}, {
-								xtype : 'button',
-								width : 60,
-								height : 30,
-								iconCls:'fa fa-refresh',
-								margin : '0 0 0 10',
-								text : '重置',
-								handler : function() {
-									me.getForm().reset();
-								}
-							}]
-
-						}]
+							text : '提现',
+							iconCls: 'fa fa-jpy',
+							handler : function() {
+								var win = Ext.create("Abby.app.money.withdrawMoneyW", {
+											parentStoreId: pageId + 'storeId'
+										});
+								win.show();
+							}
+						}
+					]
+				}]
 			});
 			this.callParent();
 		},
@@ -139,20 +166,6 @@ Ext.onReady(function() {
             mode: "SINGLE",     //"SINGLE"/"SIMPLE"/"MULTI"
             checkOnly: false     //只能通过checkbox选择
         },
-		tbar : {
-			xtype : 'toolbar',
-			items : [ 
-			    Ext.create('Ext.button.Button', {
-				text : '提现',
-				iconCls: 'fa fa-hand-lizard-o',
-				handler : function() {
-					var win = Ext.create("Abby.app.money.withdrawMoneyW", {
-								parentStoreId: pageId + 'storeId'
-							});
-					win.show();
-				}
-			})]
-		},
 			columns : [{
 				text : "ID",
 				width : 60,

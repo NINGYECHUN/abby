@@ -5,58 +5,84 @@ Ext.onReady(function(){
 		renderTo : "home",
 		items : [
 					{ 
-						region: "west", 
-						width:200, 
 						collapsible: true, 
+						region: "west", 
 						layout:'fit',
+						border:0,
 						items:[
 						{
-						    width: 300,
-						    height: 300,
-						    xtype:'panel',
+						    //xtype:'panel',
 						    defaults: {
-						        // applied to each contained panel
-						        bodyStyle: 'padding:15px'
+						        bodyStyle: 'padding:1px'
 						    },
-						    layout: {
-						        // layout-specific configs go here
-						        type: 'accordion',
-						        titleCollapse: true,
-						        animate: true/*,
-						        activeOnTop: true*/
-						    },
+						    border:0,
 						    items: [{
-						        title: '用户管理',
+						    	border:0,
+						        plugins: 'responsive',
+						        defaults:{
+						        	margin:'2 0 0 0'
+						        },
+								responsiveConfig: {  
+							        tall: {
+							        	width:40
+							        },
+							        wide:{
+							        	width:200,
+							        	title: '用户管理',
+							        }
+							    },
 						        items:[
 						        {
 						        	xtype:'button',
-						        	text:'<font size=2>修改密码</font>',
 						        	height:40,
+						        	plugins: 'responsive',
+									responsiveConfig: {  
+								        tall: {
+								        	
+								        },
+								        wide:{
+								        	text:'<font size=2>修改密码</font>'
+								        }
+									  },
+						        	columnWidth:0.3,
 						        	iconCls : 'fa fa-key',
 						        	width:'100%',
-						        	margin:'5 0 0 0',
 						        	itemId:'changePasswordItem',
 						        	handler:function(button,e){
 						        		menuTreeHandler(button,e);
 						        	}
 						        },{
 						        	xtype:'button',
-						        	text:'<font size=2>收款设置</font>',
 						        	height:40,
 						        	width:'100%',
+						        	columnWidth:0.3,
 						        	iconCls : 'fa fa-cog',
-						        	margin:'5 0 0 0',
+						        	plugins: 'responsive',
+									responsiveConfig: {  
+								        tall: {
+								        },
+								        wide:{
+								        	text:'<font size=2>收款设置</font>'
+								        }
+									  },
 						        	itemId:'gatheringSettingItem',
 						        	handler:function(button,e){
-						        		menuTreeHandler(button,e);
+						        		menuTreeHandler(button,e,'收款设置');
 						        	}
 						        },{
 						        	xtype:'button',
-						        	text:'<font size=2>提现</font>',
 						        	height:40,
+						        	columnWidth:0.3,
 						        	iconCls : 'fa fa-jpy',
 						        	width:'100%',
-						        	margin:'5 0 0 0',
+						        	plugins: 'responsive',
+									responsiveConfig: {  
+									        tall: {
+									        },
+									        wide:{
+									        	text:'<font size=2>提现</font>'
+									        }
+									  },
 						        	itemId:'withdrawMoneyItem',
 						        	handler:function(button,e){
 						        		menuTreeHandler(button,e);
@@ -67,8 +93,21 @@ Ext.onReady(function(){
 						}
 					]
 					},
-					{ region: "north", height: 150, header:false,bodyStyle:'background:#F5F5F5;',
-						html:'<div style="width:100%;height:100%;background: url('+baseUrl+'/static/image/north.jpg) no-repeat;background-size: 100% 150px;"></div>'},
+					{ 	
+						region: "north", 
+						plugins: 'responsive',
+						responsiveConfig: {  
+					        tall: {
+					        	height:50
+					        },
+					        wide:{
+					        	height: 150
+					        }
+					    },
+						header:false,
+						bodyStyle:'background:#F5F5F5;',
+						html:'<div style="width:100%;height:100%;background: url('+baseUrl+'/static/image/north.jpg) no-repeat;background-size: 100% 150px;"></div>'
+					},
 					{ region: "center", split: true, border: true, layout:'fit',
 						items:[{
 							xtype:'tabpanel',

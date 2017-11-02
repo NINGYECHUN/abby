@@ -41,10 +41,13 @@ var menuTree = {
 	 *菜单单击事件 
 	 * @returns
 	 */
-	function menuTreeHandler(thisButton,e){
+	function menuTreeHandler(thisButton,e,tabText){
 		var itemId = thisButton.itemId;
 		var pageUrl = menuTree[itemId];
-		addTab(pageUrl, itemId,thisButton.text);
+		if(tabText == null){
+			tabText = thisButton.text;
+		}
+		addTab(pageUrl, itemId,tabText);
 	}
 
 /**

@@ -11,10 +11,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    	<link rel="stylesheet" type="text/css"
+	href="${contextPath}/static/extjs/classic/theme-crisp/resources/theme-crisp-all.css" />
     <link rel="stylesheet" type="text/css"
 		href="${contextPath}/static/font-awesome/css/font-awesome.min.css" />
     
-    <script type="text/javascript" src="${contextPath}/static/extjs/build/ext-all-debug.js"></script>
+    <script type="text/javascript" src="${contextPath}/static/extjs/build/ext-all.js"></script>
+    <script type="text/javascript" src="${contextPath}/static/extjs/classic/locale/locale-zh_CN.js"></script>
  	
  	<script type="text/javascript">
 	   // Ext.Loader.setPath('Abby.app', '${contextPath}/static/pages');

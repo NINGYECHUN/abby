@@ -11,8 +11,7 @@
     <jsp:include page="/static/resource.jsp"></jsp:include>
 
     <title>app</title>
-	<link rel="stylesheet" type="text/css"
-	href="${contextPath}/static/extjs/classic/theme-crisp/resources/theme-crisp-all.css" />
+    
     <!-- The line below must be kept intact for Sencha Cmd to build your application -->
     <script type="text/javascript" src="${contextPath}/static/pages/home/homeAdmin.js"></script>
     <script type="text/javascript" src="${contextPath}/static/js/share.js"></script>

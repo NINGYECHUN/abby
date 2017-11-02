@@ -14,8 +14,16 @@ Ext.onReady(function() {
 	{
 		extend : 'Ext.Window',
 		layout : 'fit',
-		width : 400,
 		height:230,
+		plugins: 'responsive',
+		responsiveConfig: {  
+	        tall: {
+	        	width : '85%'
+	        },
+	        wide:{
+	        	width : 400
+	        }
+	    },
 		maximizable : true, // 是否可以最大化
 		closeAction : 'close',
 		modal : true,

@@ -2,7 +2,6 @@ package test;
 
 import java.security.NoSuchAlgorithmException;
 
-import com.esm.util.MethodUtil;
 import com.esm.util.StringUtil;
 
 public class test {

@@ -45,7 +45,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.JsonObject;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * Excel导出公共类
@@ -55,33 +55,33 @@ public class PoiUtil {
 	
 	private static Logger log = (Logger) LogManager.getLogger(PoiUtil.class.getName());
 
-    /*public static void exportExcel(Collection<JsonObject> dataset,List<String> columns, OutputStream out, String headerContent)  throws Exception {
+    /*public static void exportExcel(Collection<JSONObject> dataset,List<String> columns, OutputStream out, String headerContent)  throws Exception {
         exportExcel("sheet1", null, null, dataset, out, "yyyy-MM-dd", null, headerContent);
     }*/
 	
 	private static DecimalFormat    df = new DecimalFormat("0"); 
 
-    public static void exportExcel(String[] headers,HashMap<String, Object> headerValue, Collection<JsonObject> dataset,List<String> columns,
+    public static void exportExcel(String[] headers,HashMap<String, Object> headerValue, Collection<JSONObject> dataset,List<String> columns,
             OutputStream out, Map<String, Object> styleMap, String headerContent)  throws Exception {
         exportExcel("sheet1", headers, headerValue,dataset,  out, "yyyy-MM-dd", styleMap, headerContent);
     }
     
-    public static void exportExcel(String[] headers,HashMap<String, Object> headerValue, Collection<JsonObject> dataset,List<String> columns,
+    public static void exportExcel(String[] headers,HashMap<String, Object> headerValue, Collection<JSONObject> dataset,List<String> columns,
             OutputStream out, String headerContent)  throws Exception {
         exportExcel("sheet1", headers,headerValue, dataset,  out, "yyyy-MM-dd", null, headerContent);
     }
 
-    public static void exportExcel(String[] headers,HashMap<String, Object> headerValue, Collection<JsonObject> dataset, List<String> columns,
+    public static void exportExcel(String[] headers,HashMap<String, Object> headerValue, Collection<JSONObject> dataset, List<String> columns,
             OutputStream out, String pattern, Map<String, Object> styleMap, String headerContent)  throws Exception{
         exportExcel("sheet1", headers, headerValue,dataset, out, pattern, styleMap, headerContent);
     }
     
-    public static void exportExcel(String[] headers,HashMap<String, Object> headerValue, Collection<JsonObject> dataset, List<String> columns,
+    public static void exportExcel(String[] headers,HashMap<String, Object> headerValue, Collection<JSONObject> dataset, List<String> columns,
             OutputStream out, String pattern, String headerContent)  throws Exception{
         exportExcel("sheet1", headers, headerValue,dataset, out, pattern, null,headerContent);
     }
     
-    public static void exportExcel(LinkedHashMap<String, Object> headerValue, Collection<JsonObject> dataset,
+    public static void exportExcel(LinkedHashMap<String, Object> headerValue, Collection<JSONObject> dataset,
             OutputStream out, String headerContent)  throws Exception {
     	String[] headers = {};
     	headers = headerValue.keySet().toArray(headers);
@@ -105,7 +105,7 @@ public class PoiUtil {
      */
     @SuppressWarnings("unchecked")
     public static void exportExcel(String title, String[] headers, HashMap<String, Object> headerValue,
-            Collection<JsonObject> dataset, OutputStream out, String pattern, Map<String, Object> styleMap, String headerContent) throws Exception {
+            Collection<JSONObject> dataset, OutputStream out, String pattern, Map<String, Object> styleMap, String headerContent) throws Exception {
     	
     	 HSSFWorkbook workbook = null;
     	try {
@@ -141,7 +141,7 @@ public class PoiUtil {
      * @param beginRow 起始行
      * @param beginCol 起始列 ，从1开始，如果不指定，默认是1
      * @param headerValue 存放标题code和name的map
-     * @param dataset JsonObject格式的数据集合
+     * @param dataset JSONObject格式的数据集合
      * @param styleMap 一些样式 
      *                            包括colHeight（列高）,colWidth（列宽）,fontSize（字体大小）,picHeight（图片高度）,
      *                            picWidth(图片宽度),columnWidthList(ColumnWidth数据类型的list)
@@ -151,7 +151,7 @@ public class PoiUtil {
      * @throws IOException IO异常
      */
     public static void writeToExcel(HSSFWorkbook workbook,Integer beginRow,Integer beginCol,LinkedHashMap<String, Object> headerValue, 
-    		Collection<JsonObject> dataset,String headerContent,HSSFCellStyle headerStyle,HSSFSheet sheet)  throws Exception {
+    		Collection<JSONObject> dataset,String headerContent,HSSFCellStyle headerStyle,HSSFSheet sheet)  throws Exception {
     	String[] headers = {};
     	headers = headerValue.keySet().toArray(headers);
     	writeToExcel(workbook,beginRow,beginCol, headers,headerValue, dataset, "yyyy-MM-dd", null, headerContent,headerStyle,sheet);
@@ -163,7 +163,7 @@ public class PoiUtil {
      * @param beginRow 起始行
      * @param beginCol 起始列 ，从1开始，如果不指定，默认是1
      * @param headerValue 存放标题code和name的map
-     * @param dataset JsonObject格式的数据集合
+     * @param dataset JSONObject格式的数据集合
      * @param styleMap 一些样式 
      *                            包括colHeight（列高）,colWidth（列宽）,fontSize（字体大小）,picHeight（图片高度）,
      *                            picWidth(图片宽度),columnWidthList(ColumnWidth数据类型的list)
@@ -171,7 +171,7 @@ public class PoiUtil {
      * @throws IOException IO异常
      */
     public static void writeToExcel(HSSFWorkbook workbook,Integer beginRow,Integer beginCol,LinkedHashMap<String, Object> headerValue, 
-    		Collection<JsonObject> dataset,String headerContent,HSSFSheet sheet)  throws Exception {
+    		Collection<JSONObject> dataset,String headerContent,HSSFSheet sheet)  throws Exception {
     	String[] headers = {};
     	headers = headerValue.keySet().toArray(headers);
     	writeToExcel(workbook,beginRow,beginCol, headers,headerValue, dataset, "yyyy-MM-dd", null, headerContent,null,sheet);
@@ -184,7 +184,7 @@ public class PoiUtil {
      * @param beginCol 起始列 ，从1开始，如果不指定，默认是1
      * @param headers 标题code属性
      * @param headerValue 存放标题code和name的map
-     * @param dataset JsonObject格式的数据集合
+     * @param dataset JSONObject格式的数据集合
      * @param pattern 要输出的时间格式
      * @param styleMap 一些样式 
      *                            包括colHeight（列高）,colWidth（列宽）,fontSize（字体大小）,picHeight（图片高度）,
@@ -195,7 +195,7 @@ public class PoiUtil {
      * @throws IOException IO异常
      */
     public static void writeToExcel(HSSFWorkbook workbook,Integer beginRow,Integer beginCol,
-    		String[] headers, HashMap<String, Object> headerValue,Collection<JsonObject> dataset,
+    		String[] headers, HashMap<String, Object> headerValue,Collection<JSONObject> dataset,
     		String pattern, Map<String, Object> styleMap, String headerContent,HSSFCellStyle headerStyle,
     		HSSFSheet sheet) throws IOException{
     	//自定义字体大小, 行高, 行宽
@@ -371,7 +371,7 @@ public class PoiUtil {
         }
 
         // 遍历集合数据，产生数据行
-        Iterator<JsonObject> it = dataset.iterator();
+        Iterator<JSONObject> it = dataset.iterator();
         int index = beginRow;
         while (it.hasNext()) {
             index++;
@@ -379,7 +379,7 @@ public class PoiUtil {
             if(row == null){
             	row = sheet.createRow(index);
             }
-            JsonObject t = (JsonObject) it.next();
+            JSONObject t = (JSONObject) it.next();
             // 利用反射，根据javabean属性的先后顺序，动态调用getXxx()方法得到属性值
            
             for (short i = 0; i < headers.length; i++) {
@@ -513,7 +513,7 @@ public class PoiUtil {
      * @param beginRow 起始行
      * @param headers 标题code属性
      * @param headerValue 存放标题code和name的map
-     * @param dataset JsonObject格式的数据集合
+     * @param dataset JSONObject格式的数据集合
      * @param pattern 要输出的时间格式
      * @param styleMap 一些样式 
      *                            包括colHeight（列高）,colWidth（列宽）,fontSize（字体大小）,picHeight（图片高度）,
@@ -700,7 +700,7 @@ public class PoiUtil {
      * @throws IOException
      */
     public static void writeRowsWithoutHeader(HSSFWorkbook workbook,Integer beginRow, Integer beginCol,
-    		String[] columns,Collection<JsonObject> dataset,String pattern,HSSFSheet sheet) throws IOException{
+    		String[] columns,Collection<JSONObject> dataset,String pattern,HSSFSheet sheet) throws IOException{
     	try {
     	
 	        // 生成一个表格
@@ -740,13 +740,13 @@ public class PoiUtil {
 	        	beginCol = beginCol - 1;
 	        }
 	     // 遍历集合数据，产生数据行
-	        Iterator<JsonObject> it = dataset.iterator();
+	        Iterator<JSONObject> it = dataset.iterator();
 	        int index = beginRow;
 	        HSSFRow row = null;
 	        while (it.hasNext()) {
 	            index++;
 	            row = sheet.createRow(index);
-	            JsonObject t = (JsonObject) it.next();
+	            JSONObject t = (JSONObject) it.next();
 	           
 	            for (short i = 0; i < columns.length; i++) {
 	                HSSFCell cell = row.createCell(beginCol);

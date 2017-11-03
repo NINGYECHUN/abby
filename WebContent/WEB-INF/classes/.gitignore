@@ -1,1 +1,9 @@
+/applicationContext.xml
 /com/
+/config.properties
+/log4j.properties
+/messages/
+/mybatis-config.xml
+/mybatis-servlet.xml
+/test/
+/theme/

@@ -38,7 +38,6 @@ Ext.onReady(function(){
 						        	plugins: 'responsive',
 									responsiveConfig: {  
 								        tall: {
-								        	
 								        },
 								        wide:{
 								        	text:'<font size=2>修改密码</font>'
@@ -49,7 +48,7 @@ Ext.onReady(function(){
 						        	width:'100%',
 						        	itemId:'changePasswordItem',
 						        	handler:function(button,e){
-						        		menuTreeHandler(button,e);
+						        		menuTreeHandler(button,e,'修改密码');
 						        	}
 						        },{
 						        	xtype:'button',
@@ -85,7 +84,7 @@ Ext.onReady(function(){
 									  },
 						        	itemId:'withdrawMoneyItem',
 						        	handler:function(button,e){
-						        		menuTreeHandler(button,e);
+						        		menuTreeHandler(button,e,'提现');
 						        	}
 						        }
 						        ]

@@ -68,45 +68,27 @@ Ext.onReady(function() {
 			this.mainForm = mainForm;
 
 			// 保存操作
-			var saveButton = Ext.create("Ext.button.Button",{
-				text : '提现',
+			var importButton = Ext.create("Ext.button.Button",{
+				text : '导入',
 				handler : function() {
-					if (!mainForm.getForm().isValid()) {
+					var form = mainForm.getForm();
+					if (!.isValid()) {
 						Ext.MessageBox.alert("提示","请选择文件！");
 						return;
 					}
 					var win = this.ownerCt.ownerCt;
 					win.hide();
-					var values = {};
-					values = extend({},[values,mainForm.getForm().getValues() ]);
-					values.opType = opType;
-					Ext.Ajax.request({
-						url : baseUrl+ '/withdrawMoney/add',
-						params : values,
-						method : "POST",
-						success : function(response) {
-							var res = Ext.JSON.decode(response.responseText);
-								if (res.success) {
-									Ext.MessageBox.alert("提示","提现申请成功！");
-									Ext.data.StoreManager.lookup(me.parentStoreId).loadPage(1);
-								} else {
-									win.show();
-									Ext.MessageBox.alert("提示","保存失败！" + res.msg);
-								}
-							},
-							failure : function(response) {
-								if (response.responseText != '') {
-									var res = Ext.JSON.decode(response.responseText);
-									Ext.MessageBox.alert("提示", "保存失败！" + res.msg);
-									win.show();
-								} else {
-									Ext.MessageBox.alert("提示","保存失败！"+ res.msg);
-									win.show();
-									// globalObject.errTip('操作失败,原因未知！');
-								}
-							}
-						});
-					}
+	                form.submit({
+	                    url: appBaseUri + '/order/doImport',
+	                    waitMsg: '正在导入，请稍候...',
+	                    success: function(fp, o) {
+	                        Ext.Msg.alert('提出', '导入成功！.');
+	                    },
+	                    failure: function(form, action) {
+	                    	Ext.Msg.alert('提示', action.result.msg);
+	                    }
+	                });
+				  }
 				});
 
 				var cacelButton = Ext.create("Ext.button.Button",{
@@ -119,7 +101,7 @@ Ext.onReady(function() {
 				Ext.apply(this, {
 					items : mainForm,
 					buttonAlign : 'center',
-					buttons : [ saveButton, cacelButton ]
+					buttons : [ importButton, cacelButton ]
 				});
 				this.callParent();
 			}

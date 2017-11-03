@@ -1,4 +1,4 @@
-
+ 
 /**
  * 菜单ID和菜单路径.
  * @type 
@@ -8,7 +8,8 @@ var menuTree = {
 		'changePasswordItem':'user.changePassword',
 		'gatheringSettingItem':'user.gatheringSetting',
 		'withdrawMoneyItem':'money.withdrawMoneyList',
-		'withdrawMoneyDealItem':'money.withdrawMoneyDealList'
+		'withdrawMoneyDealItem':'money.withdrawMoneyDealList',
+		'orderImportItem':'order.orderList'
 };
 
 	/**

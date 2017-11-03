@@ -3,14 +3,7 @@ Ext.onReady(function(){
 	Ext.define('Abby.app.user.changePassword',{
 		extend : 'Ext.form.Panel',
 		plugins: 'responsive',
-		responsiveConfig: {  
-	        tall: {
-	        	layout:'fit'
-	        },
-	        wide:{
-	        	layout:'fit'
-	        }
-	    },
+    	layout:'fit',
 		items:[{
 			plugins: 'responsive',
 			responsiveConfig: {  
@@ -55,14 +48,14 @@ Ext.onReady(function(){
 				inputType:'password',
 				emptyText:'请再次输入新密码',
 				allowBlank:false
-			},{
-				xtype:'label',
-				html:'&nbsp;',
-				columnWidth:.2
-			},{
+			}]
+		}],
+		buttonAlign:'center',
+		buttons:[
+			{
 				xtype:'button',
 				text:'确认修改',
-				columnWidth:0.3,
+				width:100,
 				handler:function(thisButton,e){
 					
 					var form = thisButton.up("form").getForm();
@@ -95,16 +88,12 @@ Ext.onReady(function(){
 			},{
 				xtype:'button',
 				text:'清空',
-				columnWidth:0.3,
+				width:100,
 				handler:function(thisButton,e){
 					thisButton.up("form").getForm().reset();
 				}
-			},{
-				xtype:'label',
-				html:'&nbsp;',
-				columnWidth:.2
-			}]
-		}],
+			}
+		],
 		 initComponent : function() {  
 			 
 			 this.callParent(arguments);  

@@ -19,6 +19,7 @@
     <script type="text/javascript" src="${contextPath}/static/pages/user/userMainW.js"></script>
     <script type="text/javascript" src="${contextPath}/static/pages/money/withdrawMoneyDealList.js"></script>
     <script type="text/javascript" src="${contextPath}/static/pages/money/withdrawMoneyDealW.js"></script>
+    <script type="text/javascript" src="${contextPath}/static/pages/order/orderList.js"></script>
     <script type="text/javascript">
     var baseUrl = "<%=request.getContextPath()%>";
     </script>

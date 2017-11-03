@@ -50,6 +50,17 @@ Ext.onReady(function(){
 						        	handler:function(button,e){
 						        		menuTreeHandler(button,e);
 						        	}
+						        },{
+						        	xtype:'button',
+						        	text:'<font size=2>订单管理</font>',
+						        	iconCls : 'fa fa-money',
+						        	height:40,
+						        	width:'100%',
+						        	margin:'5 0 0 0',
+						        	itemId:'orderImportItem',
+						        	handler:function(button,e){
+						        		menuTreeHandler(button,e);
+						        	}
 						        }
 						        ]
 						    }]

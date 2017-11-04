@@ -1,7 +1,7 @@
 
 Ext.onReady(function() {
 
-	var pageId = "orderList";//本页面的id
+	var pageId = "homePage";//本页面的id
 
 	Ext.define(pageId + 'SearchPanel', {
 		extend : 'Ext.form.Panel',
@@ -40,7 +40,7 @@ Ext.onReady(function() {
 					xtype:'combo',
 				    fieldLabel: '状态',
 				    editable:false,
-				    columnWidth : 0.2,
+				    columnWidth : 0.15,
 				    name:'status',
 				    labelAlign : 'right',
 				    store: Ext.create('Ext.data.Store', {
@@ -84,23 +84,14 @@ Ext.onReady(function() {
 							handler : function() {
 								var form = me.getForm();
 								var vals = form.getValues();
-								extend(orderStore.proxy.extraParams,vals,true);
-								orderStore.loadPage(1);
+								extend(homePageStore.proxy.extraParams,vals,true);
+								homePageStore.loadPage(1);
 							}
 						}, {
 							iconCls:'fa fa-refresh',
 							text : '重置',
 							handler : function() {
 								me.getForm().reset();
-							}
-						},{
-							text : '导入',
-							iconCls: 'fa fa-upload',
-							handler : function() {
-								var win = Ext.create("Abby.app.order.orderW", {
-											parentStoreId: pageId + 'storeId'
-										});
-								win.show();
 							}
 						}
 					]
@@ -113,46 +104,48 @@ Ext.onReady(function() {
 	});
 
 	// ERP工单
-	Ext.define('orderModel', {
+	Ext.define('homePageModel', {
 				extend : 'Ext.data.Model',
 				fields : [
 				          	{name : 'id',type : 'string'},
 				          	{name : 'createDate',type : 'string'},
+				          	{name : 'createDateStr',type : 'string'},
 				          	{name : 'goodsName',type : 'string'},
 				          	{name : 'qty',type : 'string'},
 				          	{name : 'price',type : 'string'},
 				          	{name : 'status',type : 'string'},
 				          	{name : 'incomeRate',type : 'string'},
 				          	{name : 'dividedRate',type : 'string'},
-				          	{name : 'payment',type : 'string'},
-				          	{name : 'effectEstimate',type : 'string'},
-				          	{name : 'setAmount',type : 'string'},
-				          	{name : 'incomeEstimate',type : 'string'},
+				          	{name : 'payment',type : 'auto'},
+				          	{name : 'effectEstimate',type : 'auto'},
+				          	{name : 'setAmount',type : 'auto'},
+				          	{name : 'incomeEstimate',type : 'auto'},
 				          	{name : 'commissionRate',type : 'string'},
-				          	{name : 'subsidyAmount',type : 'string'},
+				          	{name : 'subsidyAmount',type : 'auto'},
 				          	{name : 'orderNo',type : 'string'},
 				          	{name : 'mediaId',type : 'string'},
 				          	{name : 'mediaName',type : 'string'},
 				          	{name : 'adsenseId',type : 'string'},
 				          	{name : 'adsenseName',type : 'string'},
 				          	{name : 'importDate',type : 'string'},
-				          	{name : 'importBy',type : 'string'}
+				          	{name : 'importBy',type : 'string'},
+				          	{name : 'commissionRateUser',type : 'string'}
 				          ]
 			});
 	// 工令数据源
-	var orderStore = Ext.create('Ext.data.Store', {
+	var homePageStore = Ext.create('Ext.data.Store', {
 				extend : 'Ext.data.Store',
-				model : 'orderModel',
+				model : 'homePageModel',
 				storeId : pageId + 'storeId',
 				proxy : {
 					type : 'ajax',
-					url : baseUrl+'/order/queryByMap',
+					url : baseUrl+'/order/queryUserOrder',
 					timeout : 3600000,
 					actionMethods : {
 						read : 'POST' // 提交的方式是 POST方式
 					},
 					extraParams:{
-						
+						orderByCreateDate:true
 					},
 					reader : {
 						type : 'json',
@@ -160,29 +153,35 @@ Ext.onReady(function() {
 						totalProperty : 'totalRows' // 总记录数的根名是
 					}
 				},
+				groupField : "createDateStr",//默认以班级分组
+				groupDir:'desc',
 				autoLoad : true
 			});
-		addStoreLoadFailListener(orderStore);
+		addStoreLoadFailListener(homePageStore);
 
 	//
 	Ext.define(pageId, {
 		extend : 'Ext.grid.Panel',
-		store : orderStore,
+		store : homePageStore,
 		header : false,
 		//selType : 'checkboxmodel', // 复选框
 		viewConfig:{  
             enableTextSelection:true  
         },
+        features : [{//定义表格特征
+			ftype : "groupingsummary",
+			groupHeaderTpl:'{name}'
+		}],
 		selModel: {
             injectCheckbox: 0,
             mode: "SINGLE",     //"SINGLE"/"SIMPLE"/"MULTI"
             checkOnly: false     //只能通过checkbox选择
         },
 			columns : [{
-				text : "ID",
-				width : 60,
+				text : "订单编号",
+				width : 150,
 				align : 'center',
-				dataIndex : 'id'
+				dataIndex : 'orderNo'
 			},{
 				text : "创建时间",
 				width : 150,
@@ -223,66 +222,59 @@ Ext.onReady(function() {
 				text : "付款金额",
 				width : 150,
 				align : 'center',
-				dataIndex : 'payment'
+				dataIndex : 'payment',
+				summaryType : "sum",
+				summaryRenderer : function(value) {
+					return "共" + value+"元";
+				}
 			},{
 				text : "效果预估",
 				width : 150,
 				align : 'center',
-				dataIndex : 'effectEstimate'
+				dataIndex : 'effectEstimate',
+				summaryType : "sum",
+				summaryRenderer : function(value) {
+					return "共" + value+"元";
+				}
 			},{
 				text : "结算金额",
 				width : 150,
 				align : 'center',
-				dataIndex : 'setAmount'
+				dataIndex : 'setAmount',
+				summaryType : "sum",
+				summaryRenderer : function(value) {
+					return "共" + value+"元";
+				}
 			},{
 				text : "预估收入",
 				width : 150,
 				align : 'center',
-				dataIndex : 'incomeEstimate'
+				dataIndex : 'incomeEstimate',
+				summaryType : "sum",
+				summaryRenderer : function(value) {
+					return "共" + value+"元";
+				}
 			},{
-				text : "佣金比率",
+				text : "用户佣金比率",
 				width : 150,
 				align : 'center',
-				dataIndex : 'commissionRate'
-			},{
-				text : "补贴金额",
-				width : 150,
-				align : 'center',
-				dataIndex : 'subsidyAmount'
-			},{
-				text : "订单编号",
-				width : 150,
-				align : 'center',
-				dataIndex : 'orderNo'
-			},{
-				text : "媒体id",
-				width : 150,
-				align : 'center',
-				dataIndex : 'mediaId'
+				dataIndex : 'commissionRateUser',
+				renderer: function (value, record) {
+			         if (value != null) {
+			             return value+'%';
+			         }else{
+			        	 return value;
+			         }
+			     }
 			},{
 				text : "媒体名称",
 				width : 150,
 				align : 'center',
 				dataIndex : 'mediaName'
-			},{
-				text : "广告位id",
-				width : 150,
-				align : 'center',
-				dataIndex : 'adsenseId'
-			},{
-				text : "广告位名称",
-				width : 150,
-				align : 'center',
-				dataIndex : 'adsenseName'
-			},{
-				text : "导入时间",
-				width : 150,
-				align : 'center',
-				dataIndex : 'importDate'
 			}],
 		columnLines : true,
 		bbar : Ext.create('Ext.PagingToolbar', {
-					store : orderStore,
+					store : homePageStore,
 					displayInfo : true,
 					displayMsg : '显示记录 {0} - {1} of {2}',
 					emptyMsg : "没有相应的记录"
@@ -295,12 +287,12 @@ Ext.onReady(function() {
 		 }
 	});
 	
-	var orderGrid = Ext.create(pageId);
-	Ext.define("Abby.app.order.orderList",{
+	var homePageGrid = Ext.create(pageId);
+	Ext.define("Abby.app.home.homePage",{
 		extend:'Ext.panel.Panel',
 		layout:'fit',
 		tbar:Ext.create(pageId+"SearchPanel"),
-		items:[orderGrid],
+		items:[homePageGrid],
 		 initComponent : function() {  
 			 this.callParent(arguments);  
 		 }

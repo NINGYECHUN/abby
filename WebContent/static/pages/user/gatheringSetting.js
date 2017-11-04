@@ -2,21 +2,25 @@ Ext.onReady(function(){
 	
 	Ext.define('Abby.app.user.gatheringSetting',{
 		extend : 'Ext.form.Panel',
-		layout:'column',
+		layout:'form',
 		items:[{
-			xtype:'label',
-			html:'&nbsp;',
-			columnWidth:.1
-		},{
-			xtype:'fieldset',
-			columnWidth:.8,
-			margin:'100 100 30 100',
+			plugins: 'responsive',
+			responsiveConfig: {  
+		        tall: {
+		        	margin:'5'
+		        },
+		        wide:{
+		        	margin:'20',
+		        }
+		    },
+			xtype:'form',
 			title:'收款设置',
 			style:'background: #F0F0F0',
 			layout:'column',
 			defaults:{
 				xtype:'textfield',
 				columnWidth:0.9,
+				labelWidth:70,
 				labelAlign:'right',
 				margin:'10'
 			},
@@ -29,11 +33,9 @@ Ext.onReady(function(){
 				fieldLabel:'收款人名称',
 				name:'gatheringName',
 				allowBlank:false
-			},{
-				xtype:'label',
-				html:'&nbsp;',
-				columnWidth:.3
-			},{
+			}],
+			buttonAlign:'center',
+			buttons:[{
 				xtype:'button',
 				text:'确认修改',
 				columnWidth:.15,
@@ -72,15 +74,8 @@ Ext.onReady(function(){
 				handler:function(thisButton,e){
 					thisButton.up("form").getForm().reset();
 				}
-			},{
-				xtype:'label',
-				html:'&nbsp;',
-				columnWidth:.3
-			}]
-		},{
-			xtype:'label',
-			html:'&nbsp;',
-			columnWidth:.1
+			}
+			]
 		}],
 		 initComponent : function() {  
 			 var me = this;

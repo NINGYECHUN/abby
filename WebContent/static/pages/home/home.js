@@ -11,7 +11,6 @@ Ext.onReady(function(){
 						border:0,
 						items:[
 						{
-						    //xtype:'panel',
 						    defaults: {
 						        bodyStyle: 'padding:1px'
 						    },
@@ -28,7 +27,7 @@ Ext.onReady(function(){
 							        },
 							        wide:{
 							        	width:200,
-							        	title: '用户管理',
+							        	title: '功能菜单',
 							        }
 							    },
 						        items:[
@@ -97,15 +96,14 @@ Ext.onReady(function(){
 						plugins: 'responsive',
 						responsiveConfig: {  
 					        tall: {
-					        	height:50
+					        	height:0
 					        },
 					        wide:{
-					        	height: 150
+					        	height: 120,
+								header:false,
+								bodyStyle:'background:#F5F5F5;background: url('+baseUrl+'/static/image/north.png) no-repeat;background-size: 100% 100%;-moz-background-size:100% 100%;'
 					        }
-					    },
-						header:false,
-						bodyStyle:'background:#F5F5F5;',
-						html:'<div style="width:100%;height:100%;background: url('+baseUrl+'/static/image/north.jpg) no-repeat;background-size: 100% 150px;"></div>'
+					    }
 					},
 					{ region: "center", split: true, border: true, layout:'fit',
 						items:[{
@@ -113,10 +111,10 @@ Ext.onReady(function(){
 							id:"hometabepanelId",
 							height:100,
 							items:[
-								{
+								Ext.create("Abby.app.home.homePage",{
 									title:'首页',
 									closeable:false
-								}
+								})
 							]
 						}]} 
 		         ]

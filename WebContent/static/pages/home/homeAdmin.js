@@ -6,60 +6,84 @@ Ext.onReady(function(){
 		items : [
 					{ 
 						region: "west", 
-						width:200, 
 						collapsible: true, 
 						layout:'fit',
+						border:0,
 						items:[
 						{
-						    width: 300,
-						    height: 300,
-						    xtype:'panel',
-						    defaults: {
-						        // applied to each contained panel
-						        bodyStyle: 'padding:15px'
-						    },
-						    layout: {
-						        // layout-specific configs go here
-						        type: 'accordion',
-						        titleCollapse: true,
-						        animate: true/*,
-						        activeOnTop: true*/
-						    },
+							 defaults: {
+							        bodyStyle: 'padding:1px'
+							  },
+							border:0,
 						    items: [{
-						        title: '用户管理',
+						    	border:0,
+						        plugins: 'responsive',
+						        defaults:{
+						        	margin:'2 0 0 0'
+						        },
+								responsiveConfig: {  
+							        tall: {
+							        	width:40
+							        },
+							        wide:{
+							        	width:200,
+							        	title: '功能菜单',
+							        }
+							    },
 						        items:[
 						        {
 						        	xtype:'button',
-						        	text:'<font size=2>用户管理</font>',
 						        	height:40,
 						        	iconCls : 'fa fa-users',
+						        	plugins: 'responsive',
+									responsiveConfig: {  
+								        tall: {
+								        },
+								        wide:{
+								        	text:'<font size=2>用户管理</font>'
+								        }
+									},
 						        	width:'100%',
 						        	margin:'5 0 0 0',
 						        	itemId:'userListTabItem',
 						        	handler:function(button,e){
-						        		menuTreeHandler(button,e);
+						        		menuTreeHandler(button,e,'用户管理');
 						        	}
 						        },{
 						        	xtype:'button',
-						        	text:'<font size=2>用户结算</font>',
 						        	iconCls : 'fa fa-money',
 						        	height:40,
+						        	plugins: 'responsive',
+									responsiveConfig: {  
+								        tall: {
+								        },
+								        wide:{
+								        	text:'<font size=2>用户结算</font>'
+								        }
+									},
 						        	width:'100%',
 						        	margin:'5 0 0 0',
 						        	itemId:'withdrawMoneyDealItem',
 						        	handler:function(button,e){
-						        		menuTreeHandler(button,e);
+						        		menuTreeHandler(button,e,'用户结算');
 						        	}
 						        },{
 						        	xtype:'button',
-						        	text:'<font size=2>订单管理</font>',
-						        	iconCls : 'fa fa-money',
+						        	iconCls : 'fa fa-cart-plus',
 						        	height:40,
+						        	plugins: 'responsive',
+									responsiveConfig: {  
+								        tall: {
+								        },
+								        wide:{
+								        	text:'<font size=2>订单管理</font>'
+								        }
+									},
 						        	width:'100%',
 						        	margin:'5 0 0 0',
 						        	itemId:'orderImportItem',
 						        	handler:function(button,e){
-						        		menuTreeHandler(button,e);
+						        		menuTreeHandler(button,e,'订单管理');
 						        	}
 						        }
 						        ]
@@ -67,18 +91,30 @@ Ext.onReady(function(){
 						}
 					]
 					},
-					{ region: "north", height: 150, header:false,bodyStyle:'background:#F5F5F5;',
-						html:'<div style="width:100%;height:100%;background: url('+baseUrl+'/static/image/north.jpg) no-repeat;background-size: 100% 150px;"></div>'},
+					{ 	
+						region: "north", 
+						plugins: 'responsive',
+						responsiveConfig: {  
+					        tall: {
+					        	height:0
+					        },
+					        wide:{
+					        	height: 120,
+								header:false,
+								bodyStyle:'background:#F5F5F5;background: url('+baseUrl+'/static/image/northAdmin.png) no-repeat;background-size: 100% 100%;-moz-background-size:100% 100%;'
+					        }
+					    }
+					},
 					{ region: "center", split: true, border: true, layout:'fit',
 						items:[{
 							xtype:'tabpanel',
 							id:"hometabepanelId",
 							height:100,
 							items:[
-								{
+								Ext.create("Abby.app.home.homePageAdmin",{
 									title:'首页',
 									closeable:false
-								}
+								})
 							]
 						}]} 
 		         ]

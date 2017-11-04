@@ -14,77 +14,74 @@ Ext.onReady(function() {
 
 	Ext.define(pageId + 'SearchPanel', {
 		extend : 'Ext.form.Panel',
-		layout : 'column',
 		autoheight:true,
+		defaults:{
+			margin:'3 0 3 0'
+		},		
+		plugins: 'responsive',
+		responsiveConfig: {  
+	        tall: {
+	        	layout:'vbox'
+	        },
+	        wide:{
+	        	layout : 'column'
+	        }
+	    },
 		initComponent : function() {
 			var me = this;
 			Ext.apply(this, {
 				items : [{
-							// 第一列
-							xtype : "container",
-							layout : 'form',
-							defaultType : "textfield",
-							defaults : {
-								width : 100
-							},
-							labelAlign : 'right',
-							floatable : true,
-							columnWidth : 0.27,
-							items : [{
-										labelAlign : 'right',
-										fieldLabel : "用户账号",
-										name : "account"
-									}]
-						},{
-							// 第二列
-							xtype : "container",
-							layout : 'form',
-							// buttonAlign : 'right',
-							defaultType : "textfield",
-							defaults : {
-								width : 100
-							},
-							labelAlign : 'right',
-							floatable : true,
-							columnWidth : 0.27,
-							items : [{
-										labelAlign : 'right',
-										fieldLabel : "用户名称",
-										name : "name"
-							          }]
-						},{
-							// 第四列
-							xtype : "container",
-							layout : 'form',
-							// buttonAlign : 'right',
-							columnWidth : 0.19,
-							floatable : true,
-							style : 'margin-left:40px;margin-top:0px',
-							items : [{
-								xtype : 'button',
-								width : 60,
-								iconCls:'fa fa-search',
-								height : 30,
-								text : '查询',
-								handler : function() {
-									var form = me.getForm();
-									var vals = form.getValues();
-									extend(userStore.proxy.extraParams,vals,true);
-									userStore.loadPage(1);
-								}
-							}, {
-								xtype : 'button',
-								width : 60,
-								height : 30,
-								iconCls:'fa fa-refresh',
-								margin : '0 0 0 10',
-								text : '重置',
-								handler : function() {
-									me.getForm().reset();
-								}
-							}]
-
-						}]
+					xtype:'textfield',
+					fieldLabel:'用户账号',
+					columnWidth : 0.20,
+					name:'account',
+					labelAlign:'right'
+				},{
+					xtype:'textfield',
+					fieldLabel:'用户名称',
+					columnWidth : 0.20,
+					name:'name',
+					labelAlign:'right'
+				},{
+					margin:'0 0 0 0',
+					xtype:'toolbar',
+					layout:'hbox',
+					border:0,
+					plugins: 'responsive',
+					responsiveConfig: {  
+				        tall: {
+				        	columnWidth:0.9
+				        },
+				        wide:{
+				        	columnWidth:0.2
+				        }
+				    },
+					defaults:{
+						xtype : 'button',
+						width : 60,
+						margin : '0 0 0 10',
+						height : 30
+					},
+					items:[
+						{
+							iconCls:'fa fa-search',
+							text : '查询',
+							handler : function() {
+								var form = me.getForm();
+								var vals = form.getValues();
+								extend(userStore.proxy.extraParams,vals,true);
+								userStore.loadPage(1);
+							}
+						}, {
+							iconCls:'fa fa-refresh',
+							text : '重置',
+							handler : function() {
+								me.getForm().reset();
+							}
+						}
+					]
+					}
+					]
 			});
 			this.callParent();
 		},

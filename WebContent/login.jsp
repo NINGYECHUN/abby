@@ -266,6 +266,7 @@
 
 		</script>
 		 <div id="loginDiv" style="float:left;position: absolute;z-index:4;">  
+		 <div style="background:url(static/image/logo.png);width:220px;height:100px;margin:0 0 0 40px;"></div>
         <form action="sys/login" method="post" id="formLogin">  
             <input type="text" required="required" placeholder="账号" name="account"></input>  
             <input type="password" required="required" placeholder="密码" name="password"></input>  
@@ -277,7 +278,7 @@
 		<script type="text/javascript">
 		var w=screen.width;
 		var h=screen.height;
-		document.getElementById("loginDiv").style.top = (h/2-100)+"px";
+		document.getElementById("loginDiv").style.top = (h/2-200)+"px";
 		document.getElementById("loginDiv").style.left = ((w-300)/2)+"px";
 		</script>
 		

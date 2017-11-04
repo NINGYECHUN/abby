@@ -14,7 +14,15 @@ Ext.onReady(function() {
 	{
 		extend : 'Ext.Window',
 		layout : 'fit',
-		width : 780,
+		plugins: 'responsive',
+		responsiveConfig: {  
+	        tall: {
+	        	width : '85%'
+	        },
+	        wide:{
+	        	width : 780
+	        }
+	    },
 		height:340,
 		maximizable : true, // 是否可以最大化
 		closeAction : 'close',
@@ -48,6 +56,9 @@ Ext.onReady(function() {
 				items : [{
 					xtype:'fieldset',
 					title:'用户基本信息',
+					defaults:{
+						labelWidth:10
+					},
 					layout:'form',
 					items:[
 								{
@@ -55,30 +66,37 @@ Ext.onReady(function() {
 									name:'id'
 								},
 								{
+									labelWidth:30,
 									xtype:'textfield',
+									labelAlign:'right',
 									allowBlank:false,
 									fieldLabel:'用户账号',
 									name:'account'
 								},
 								{
 									xtype:'textfield',
+									labelAlign:'right',
 									fieldLabel:'用户名称',
 									name:'name'
 								},{
 									xtype:'textfield',
+									labelAlign:'right',
 									fieldLabel:'PID',
 									name:'pid'
 								},
 								{
 									xtype:'numberfield',
+									labelAlign:'right',
 									fieldLabel:'提成百分比',
 									name:'commissionRate'
 								},{
 									xtype:'textfield',
+									labelAlign:'right',
 									fieldLabel:'支付宝账号',
 									name:'alipay'
 								},{
 									xtype : 'radiogroup',
+									labelAlign:'right',
 									fieldLabel:"是否管理员",
 									items : [{
 										name : 'isAdmin',
@@ -95,6 +113,7 @@ Ext.onReady(function() {
 									}]
 								},{
 									xtype:'textfield',
+									labelAlign:'right',
 									fieldLabel:'手机号码',
 									name:'phone'
 								}

@@ -13,7 +13,7 @@ Ext.onReady(function() {
 	{
 		extend : 'Ext.Window',
 		layout : 'fit',
-		height:230,
+		height:150,
 		plugins: 'responsive',
 		responsiveConfig: {  
 	        tall: {
@@ -59,8 +59,16 @@ Ext.onReady(function() {
 								{
 									xtype:'filefield',
 									allowBlank:false,
-				                    label: "选择需要导入的Excel文件",
-									name:'file'
+									name:'file',
+									buttonText:'选择',
+									plugins: 'responsive',
+									responsiveConfig: {  
+								        tall: {
+								        },
+								        wide:{
+								        	fieldLabel: "选择需要导入的Excel文件",
+								        }
+								    }
 								}
 					       ]
 				}]
@@ -72,17 +80,18 @@ Ext.onReady(function() {
 				text : '导入',
 				handler : function() {
 					var form = mainForm.getForm();
-					if (!.isValid()) {
+					if (!form.isValid()) {
 						Ext.MessageBox.alert("提示","请选择文件！");
 						return;
 					}
 					var win = this.ownerCt.ownerCt;
 					win.hide();
 	                form.submit({
-	                    url: appBaseUri + '/order/doImport',
+	                    url: baseUrl + '/order/doImport',
 	                    waitMsg: '正在导入，请稍候...',
 	                    success: function(fp, o) {
 	                        Ext.Msg.alert('提出', '导入成功！.');
+	                        Ext.data.StoreManager.lookup(me.parentStoreId).loadPage(1);
 	                    },
 	                    failure: function(form, action) {
 	                    	Ext.Msg.alert('提示', action.result.msg);

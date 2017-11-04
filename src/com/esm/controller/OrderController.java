@@ -1,7 +1,5 @@
 package com.esm.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -18,13 +16,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.esm.model.Order;
 import com.esm.model.User;
 import com.esm.service.OrderService;
-import com.esm.service.UserService;
 import com.esm.util.ListView;
 import com.esm.util.MethodUtil;
 import com.esm.util.PageInfo;
 import com.esm.util.StringUtil;
 import com.esm.util.TransforUtil;
-import com.google.gson.JsonObject;
 
 /**
  * =======================================================================
@@ -60,6 +56,34 @@ public class OrderController {
 		Map<String, Object> condition = TransforUtil.transRMapToMap(request.getParameterMap());
 		// 获取查询条件
 		PageInfo pageInfo = new PageInfo(Integer.parseInt(request.getParameter("start")), Integer.parseInt(request.getParameter("limit")));
+		String orderByCreateDate = request.getParameter("orderByCreateDate");
+		if("true".equals(orderByCreateDate)) {
+			condition.put("orderByClause", " t.create_date desc ");
+		}
+		ListView<Order> listView = orderService.queryByMap(condition, pageInfo);
+		JSONObject object = MethodUtil.fromObject(listView);
+		return object;
+	}
+	
+	/**
+	 * 查询订单信息 
+	 * @param request 请求
+	 * @param response 返回
+	 * @return 返回结果
+	 */
+	@RequestMapping(value = "/queryUserOrder")
+	@ResponseBody
+	public JSONObject queryUserOrder(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> condition = TransforUtil.transRMapToMap(request.getParameterMap());
+		// 获取查询条件
+		PageInfo pageInfo = new PageInfo(Integer.parseInt(request.getParameter("start")), Integer.parseInt(request.getParameter("limit")));
+		String orderByCreateDate = request.getParameter("orderByCreateDate");
+		if("true".equals(orderByCreateDate)) {
+			condition.put("orderByClause", " t.create_date desc ");
+		}
+		User user = (User) request.getSession().getAttribute("user");
+		condition.put("mediaNameEq", user.getAccount());
 		ListView<Order> listView = orderService.queryByMap(condition, pageInfo);
 		JSONObject object = MethodUtil.fromObject(listView);
 		return object;

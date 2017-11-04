@@ -5,57 +5,81 @@ Ext.onReady(function() {
 
 	Ext.define(pageId + 'SearchPanel', {
 		extend : 'Ext.form.Panel',
-		layout : 'column',
 		autoheight:true,
 		defaults:{
-			margin:'10 0 10 0'
-		},
+			margin:'3 0 3 0'
+		},		
+		plugins: 'responsive',
+		responsiveConfig: {  
+	        tall: {
+	        	layout:'vbox'
+	        },
+	        wide:{
+	        	layout : 'column'
+	        }
+	    },
 		initComponent : function() {
 			var me = this;
 			Ext.apply(this, {
 				items : [{
-							labelAlign : 'right',
-							fieldLabel : "开始时间",
-							xtype:'datefield',
-							format:'Y-m-d',
-							name : "startDate",
-							columnWidth : 0.2
-						},{
-							// 第二列
-							labelAlign : 'right',
-							fieldLabel : "结束时间",
-							format:'Y-m-d',
-							xtype:'datefield',
-							name : "endDate",
-							columnWidth : 0.20
-						},{
-							xtype:'combo',
-						    fieldLabel: '状态',
-						    editable:false,
-						    labelWidth:60,
-						    columnWidth : 0.14,
-						    name:'status',
-						    labelAlign : 'right',
-						    store: Ext.create('Ext.data.Store', {
-									 fields: ['value', 'name'],
-									 data : [
-									    {"value":null, "name":"全部"},
-							   			{"value":1, "name":"结算中"},
-							   			{"value":2, "name":"结算完成"},
-							   			{"value":3, "name":"结算失败"}
-									   ]
-									}),
-						    queryMode: 'local',
-						    value:1,
-						    displayField: 'name',
-						    valueField: 'value',
-						    emptyText:'请选择...'
-						},{
-							xtype : 'button',
-							width : 60,
+					labelAlign : 'right',
+					fieldLabel : "开始时间",
+					xtype:'datefield',
+					format:'Y-m-d',
+					name : "startDate",
+					columnWidth : 0.2
+				},{
+					// 第二列
+					labelAlign : 'right',
+					fieldLabel : "结束时间",
+					format:'Y-m-d',
+					xtype:'datefield',
+					name : "endDate",
+					columnWidth : 0.20
+				},{
+					xtype:'combo',
+				    fieldLabel: '状态',
+				    editable:false,
+				    columnWidth : 0.2,
+				    name:'status',
+				    labelAlign : 'right',
+				    store: Ext.create('Ext.data.Store', {
+							 fields: ['value', 'name'],
+							 data : [
+							    {"value":null, "name":"全部"},
+					   			{"value":1, "name":"结算中"},
+					   			{"value":2, "name":"结算完成"},
+					   			{"value":3, "name":"结算失败"}
+							   ]
+							}),
+				    queryMode: 'local',
+				    value:1,
+				    displayField: 'name',
+				    valueField: 'value',
+				    emptyText:'全部'
+				},{
+					margin:'0 0 0 0',
+					xtype:'toolbar',
+					layout:'hbox',
+					border:0,
+					plugins: 'responsive',
+					responsiveConfig: {  
+				        tall: {
+				        	columnWidth:0.9
+				        },
+				        wide:{
+				        	columnWidth:0.3
+				        }
+				    },
+					defaults:{
+						xtype : 'button',
+						width : 60,
+						margin : '0 0 0 10',
+						height : 30,
+					},
+					items:[
+						{
 							iconCls:'fa fa-search',
-							margin : '5 0 0 10',
-							height : 30,
 							text : '查询',
 							handler : function() {
 								var form = me.getForm();
@@ -64,16 +88,30 @@ Ext.onReady(function() {
 								withdrawMoneyStore.loadPage(1);
 							}
 						}, {
-							xtype : 'button',
-							width : 60,
-							height : 30,
 							iconCls:'fa fa-refresh',
-							margin : '5 0 0 10',
 							text : '重置',
 							handler : function() {
 								me.getForm().reset();
 							}
-						}]
+						},{
+							text : '结算',
+							iconCls: 'fa fa-exchange',
+							handler : function() {
+								
+								var records = withdrawMoneyGrid.getSelectionModel().getSelection();
+								if(records.length == 0){
+									Ext.MessageBox.alert("提示","请至少选择一项后进行操作！");
+									return;
+								}
+								var win = Ext.create("Abby.app.money.withdrawMoneyDealW", {
+									parentStoreId: pageId + 'storeId',
+									records:records
+								});
+								win.show();
+							}
+						}
+					]
+				}]
 			});
 			this.callParent();
 		},
@@ -139,27 +177,6 @@ Ext.onReady(function() {
             mode: "MULTI",     //"SINGLE"/"SIMPLE"/"MULTI"
             checkOnly: false     //只能通过checkbox选择
         },
-		tbar : {
-			xtype : 'toolbar',
-			items : [ 
-			    Ext.create('Ext.button.Button', {
-				text : '结算',
-				iconCls: 'fa fa-exchange',
-				handler : function() {
-					
-					var records = withdrawMoneyGrid.getSelectionModel().getSelection();
-					if(records.length == 0){
-						Ext.MessageBox.alert("提示","请至少选择一项后进行操作！");
-						return;
-					}
-					var win = Ext.create("Abby.app.money.withdrawMoneyDealW", {
-						parentStoreId: pageId + 'storeId',
-						records:records
-					});
-					win.show();
-				}
-			})]
-		},
 			columns : [{
 				text : "ID",
 				width : 60,

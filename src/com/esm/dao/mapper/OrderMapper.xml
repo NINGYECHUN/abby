@@ -23,6 +23,9 @@
     <result column="adsense_name" jdbcType="VARCHAR" property="adsenseName" />
     <result column="import_date" jdbcType="TIMESTAMP" property="importDate" />
     <result column="import_by" jdbcType="BIGINT" property="importBy" />
+    <result column="commission_rate_user" jdbcType="DOUBLE" property="commissionRateUser" />
+    <result column="create_date_str" jdbcType="VARCHAR" property="createDateStr" />
+    
   </resultMap>
   <sql id="Where_Clause">
     <where>
@@ -30,6 +33,16 @@
       <if test="map.id !=null ">
         <![CDATA[ 
         AND t.id = #{map.id}
+        ]]>
+      </if>
+      <if test="map.startDate !=null and map.startDate !='' ">
+        <![CDATA[ 
+        AND DATE_FORMAT(t.create_date,'%Y-%m-%d') >= #{map.startDate}
+        ]]>
+      </if>
+      <if test="map.endDate !=null and map.endDate !='' ">
+        <![CDATA[ 
+        AND DATE_FORMAT(t.create_date,'%Y-%m-%d') <= #{map.endDate}
         ]]>
       </if>
       <if test="map.goodsName !=null and map.goodsName !='' ">
@@ -77,6 +90,11 @@
         AND UPPER(t.media_name) like trim(UPPER(CONCAT('%',#{map.mediaName},'%')))
         ]]>
       </if>
+      <if test="map.mediaNameEq !=null and map.mediaNameEq !='' ">
+        <![CDATA[ 
+        AND t.media_name = #{map.mediaNameEq}
+        ]]>
+      </if>
       <if test="map.adsenseId !=null and map.adsenseId !='' ">
         <![CDATA[ 
         AND UPPER(t.adsense_id) like trim(UPPER(CONCAT('%',#{map.adsenseId},'%')))
@@ -97,6 +115,7 @@
   <sql id="Base_Column_List">
     t.id as id, 
     t.create_date as create_date, 
+    DATE_FORMAT(t.create_date,'%Y-%m-%d') as create_date_str,
     t.goods_name as goods_name, 
     t.qty as qty, 
     t.price as price, 
@@ -119,8 +138,10 @@
   </sql>
   <select id="queryByMap" parameterType="HashMap" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from tt_order t
+	    <include refid="Base_Column_List" />,
+	    u.commission_rate as commission_rate_user
+    from tt_order t 
+    	left join tm_user u on t.media_name=u.account
     <if test="_parameter != null">
       <include refid="Where_Clause" />
     </if>
@@ -130,6 +151,7 @@
     <if test="map.orderByClause == null">
       order by t.id DESC 
     </if>
+    limit #{page.start},#{page.limit}
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 

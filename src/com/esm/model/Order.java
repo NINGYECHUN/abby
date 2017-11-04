@@ -23,6 +23,11 @@ public class Order {
     创建时间.
     */
     private Date createDate;
+    
+    /**
+    创建时间.
+    */
+    private String createDateStr;
 
     /**
     商品名称.
@@ -118,6 +123,11 @@ public class Order {
     导入人id.
     */
     private Long importBy;
+    
+    /**
+     * 用户表上设置的佣金比率.
+     */
+    private Double commissionRateUser;
 
     /**
     获取id(主键id)的当前值.
@@ -454,4 +464,20 @@ public class Order {
     public void setImportBy(Long importBy) {
         this.importBy = importBy;
     }
+
+	public Double getCommissionRateUser() {
+		return commissionRateUser;
+	}
+
+	public void setCommissionRateUser(Double commissionRateUser) {
+		this.commissionRateUser = commissionRateUser;
+	}
+
+	public String getCreateDateStr() {
+		return createDateStr;
+	}
+
+	public void setCreateDateStr(String createDateStr) {
+		this.createDateStr = createDateStr;
+	}
 }

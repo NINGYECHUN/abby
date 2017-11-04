@@ -14,8 +14,16 @@ Ext.onReady(function() {
 	{
 		extend : 'Ext.Window',
 		layout : 'fit',
-		width : 400,
 		height:290,
+		plugins: 'responsive',
+		responsiveConfig: {  
+	        tall: {
+	        	width : '85%'
+	        },
+	        wide:{
+	        	width : 400
+	        }
+	    },
 		maximizable : true, // 是否可以最大化
 		closeAction : 'close',
 		modal : true,
@@ -66,13 +74,13 @@ Ext.onReady(function() {
 									items : [{
 										name : 'judgeType',
 										inputValue : '1',
-										width:100,
+										width:80,
 										boxLabel : '成功结算',
 										checked : true
 									}, {
 										name : 'judgeType',
 										inputValue : '0',
-										width:100,
+										width:80,
 										boxLabel : '失败结算'
 									} ]
 								},

@@ -10,9 +10,10 @@
     
     <jsp:include page="/static/resource.jsp"></jsp:include>
 
-    <title>app</title>
+    <title>云梦阁</title>
 
     <!-- The line below must be kept intact for Sencha Cmd to build your application -->
+    <script type="text/javascript" src="${contextPath}/static/pages/home/homePage.js"></script>
     <script type="text/javascript" src="${contextPath}/static/pages/home/home.js"></script>
     <script type="text/javascript" src="${contextPath}/static/js/share.js"></script>
     <script type="text/javascript" src="${contextPath}/static/pages/user/changePassword.js"></script>

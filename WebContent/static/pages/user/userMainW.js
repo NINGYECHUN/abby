@@ -20,10 +20,10 @@ Ext.onReady(function() {
 	        	width : '85%'
 	        },
 	        wide:{
-	        	width : 780
+	        	width : 500
 	        }
 	    },
-		height:340,
+		height:450,
 		maximizable : true, // 是否可以最大化
 		closeAction : 'close',
 		modal : true,
@@ -45,6 +45,39 @@ Ext.onReady(function() {
 			// 操作类型，主要区别是什么操作，创建还是更新还是查看
 			var opType = me.opType;
 			
+			var userStore = Ext.create('Ext.data.Store', {
+				 fields: ['id', 'account'],
+				 proxy: {  
+		             type: 'ajax',  
+		             url: baseUrl+'/user/selectByMap',  
+		             timeout: 3600000,
+		             actionMethods : {
+		  				read : 'POST' // 提交的方式是 POST方式
+		  			},
+		  			extraParams:{
+		  				isAdmin:0
+		  			},
+		  			reader: {  
+		                type: 'json',  
+		                root: 'dataList'
+		            }  
+		         },
+		         autoLoad: false
+				});
+			
+			var userCombo = new Ext.form.ComboBox({
+				xtype : 'combobox',
+				fieldLabel : '上级代理',
+				labelAlign : 'right',
+				name : 'parentId',
+				store : userStore,
+				valueField : 'id',
+				displayField : 'account',
+				typeAhead : true,
+				queryMode : 'remote',
+				emptyText : '请选择...'
+			});
+			
 		// 页面维护标题form
 		var mainForm = new Ext.form.FormPanel(
 			{
@@ -57,16 +90,16 @@ Ext.onReady(function() {
 					xtype:'fieldset',
 					title:'用户基本信息',
 					defaults:{
-						labelWidth:10
+						width:'99%',
+						labelWidth:120
 					},
-					layout:'form',
+					layout:'vbox',
 					items:[
 								{
 									xtype:'hiddenfield',
 									name:'id'
 								},
 								{
-									labelWidth:30,
 									xtype:'textfield',
 									labelAlign:'right',
 									allowBlank:false,
@@ -87,8 +120,13 @@ Ext.onReady(function() {
 								{
 									xtype:'numberfield',
 									labelAlign:'right',
-									fieldLabel:'提成百分比',
+									fieldLabel:'佣金比率(实际计算)',
 									name:'commissionRate'
+								},{
+									xtype:'numberfield',
+									labelAlign:'right',
+									fieldLabel:'佣金比率(用户显示)',
+									name:'commissionRateShow'
 								},{
 									xtype:'textfield',
 									labelAlign:'right',
@@ -118,6 +156,22 @@ Ext.onReady(function() {
 									name:'phone'
 								}
 					       ]
+				},{
+					xtype:'fieldset',
+					title:'上级代理',
+					defaults:{
+						width:'99%',
+						labelWidth:120
+					},
+					layout:'vbox',
+					items:[{
+						xtype:'numberfield',
+						labelAlign:'right',
+						fieldLabel:'分给上级代理提成',
+						name:'commissionRateToParent'
+					},
+					userCombo
+					]
 				}]
 			});
 			this.mainForm = mainForm;
@@ -136,6 +190,10 @@ Ext.onReady(function() {
 						me.initData);
 				setFormReadOnly(mainForm);
 			}
+			
+			userStore.proxy.extraParams.notEqId = mainForm.getForm().getValues()['id'];
+			userStore.load(function(records, operation, success){
+			});
 
 			// 保存操作
 			var saveButton = Ext.create("Ext.button.Button",{

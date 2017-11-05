@@ -9,7 +9,8 @@ var menuTree = {
 		'gatheringSettingItem':'user.gatheringSetting',
 		'withdrawMoneyItem':'money.withdrawMoneyList',
 		'withdrawMoneyDealItem':'money.withdrawMoneyDealList',
-		'orderImportItem':'order.orderList'
+		'orderImportItem':'order.orderList',
+		'incomeViewItem':'income.incomeList'
 };
 
 	/**
@@ -105,4 +106,11 @@ function setFormReadOnly(form,isReadOnly){
 		var field = fieldList[i];
 		field.setReadOnly(isReadOnly);
 	}
+}
+
+function nullTo0(obj){
+	if(obj == null){
+		obj = 0;
+	}
+	return obj;
 }

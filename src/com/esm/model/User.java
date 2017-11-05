@@ -40,9 +40,14 @@ public class User {
     private String pid;
 
     /**
-    提成比率（直接是百分数，比如是10就表示是10%）.
+    佣金比率（直接是百分数，比如是10就表示是10%）.
     */
     private Double commissionRate;
+    
+    /**
+     * 佣金比率（只是用来显示给用户看）
+     */
+    private Double commissionRateShow;
 
     /**
     是否管理员 1-管理员 0-非管理员.
@@ -73,6 +78,16 @@ public class User {
      * 收款人名称.
      */
     private String gatheringName;
+    
+    /**
+     * 给上级代理的佣金比率.
+     */
+    private Double commissionRateToParent;
+    
+    /**
+     * 上级代理用户id.
+     */
+    private Long parentId;
 
     /**
     获取id(主键id)的当前值.
@@ -248,5 +263,29 @@ public class User {
 
 	public void setGatheringName(String gatheringName) {
 		this.gatheringName = gatheringName;
+	}
+
+	public Double getCommissionRateToParent() {
+		return commissionRateToParent;
+	}
+
+	public void setCommissionRateToParent(Double commissionRateToParent) {
+		this.commissionRateToParent = commissionRateToParent;
+	}
+
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+
+	public Double getCommissionRateShow() {
+		return commissionRateShow;
+	}
+
+	public void setCommissionRateShow(Double commissionRateShow) {
+		this.commissionRateShow = commissionRateShow;
 	}
 }

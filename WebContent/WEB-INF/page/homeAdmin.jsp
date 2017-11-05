@@ -16,12 +16,14 @@
      <script type="text/javascript" src="${contextPath}/static/pages/home/homePageAdmin.js"></script>
     <script type="text/javascript" src="${contextPath}/static/pages/home/homeAdmin.js"></script>
     <script type="text/javascript" src="${contextPath}/static/js/share.js"></script>
+    <script type="text/javascript" src="${contextPath}/static/pages/user/changePassword.js"></script>
     <script type="text/javascript" src="${contextPath}/static/pages/user/userList.js"></script>
     <script type="text/javascript" src="${contextPath}/static/pages/user/userMainW.js"></script>
     <script type="text/javascript" src="${contextPath}/static/pages/money/withdrawMoneyDealList.js"></script>
     <script type="text/javascript" src="${contextPath}/static/pages/money/withdrawMoneyDealW.js"></script>
     <script type="text/javascript" src="${contextPath}/static/pages/order/orderList.js"></script>
     <script type="text/javascript" src="${contextPath}/static/pages/order/orderW.js"></script>
+    <script type="text/javascript" src="${contextPath}/static/pages/income/incomeList.js"></script>
     <script type="text/javascript">
     var baseUrl = "<%=request.getContextPath()%>";
     </script>

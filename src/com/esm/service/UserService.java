@@ -1,6 +1,7 @@
 package com.esm.service;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
@@ -80,5 +81,12 @@ public interface UserService{
 	 * @return
 	 */
 	User getUserById(Long userId);
+
+	/**
+	 * 查出所有用户.
+	 * @param condition
+	 * @return
+	 */
+	List<User> selectByMap(Map<String, Object> condition);
 
 }

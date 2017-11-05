@@ -68,6 +68,11 @@ public class Order {
     效果预估.
     */
     private Double effectEstimate;
+    
+    /**
+    效果预估(实际给用户的效果预估).
+    */
+    private Double effectEstimateUser;
 
     /**
     结算金额.
@@ -83,6 +88,11 @@ public class Order {
     佣金比率.
     */
     private String commissionRate;
+    
+    /**
+    佣金金额.
+    */
+    private Double commissionAmount;
 
     /**
     补贴金额.
@@ -128,7 +138,17 @@ public class Order {
      * 用户表上设置的佣金比率.
      */
     private Double commissionRateUser;
-
+    
+    /**
+     * 用户表上设置的佣金.
+     */
+    private Double commissionAmountUser;
+    
+    /**
+     * 用户设置上的显示佣金比率.
+     */
+    private Double commissionRateShow;
+    
     /**
     获取id(主键id)的当前值.
     @return 得到的id的值
@@ -479,5 +499,37 @@ public class Order {
 
 	public void setCreateDateStr(String createDateStr) {
 		this.createDateStr = createDateStr;
+	}
+
+	public Double getCommissionAmount() {
+		return commissionAmount;
+	}
+
+	public void setCommissionAmount(Double commissionAmount) {
+		this.commissionAmount = commissionAmount;
+	}
+
+	public Double getCommissionAmountUser() {
+		return commissionAmountUser;
+	}
+
+	public void setCommissionAmountUser(Double commissionAmountUser) {
+		this.commissionAmountUser = commissionAmountUser;
+	}
+
+	public Double getEffectEstimateUser() {
+		return effectEstimateUser;
+	}
+
+	public void setEffectEstimateUser(Double effectEstimateUser) {
+		this.effectEstimateUser = effectEstimateUser;
+	}
+
+	public Double getCommissionRateShow() {
+		return commissionRateShow;
+	}
+
+	public void setCommissionRateShow(Double commissionRateShow) {
+		this.commissionRateShow = commissionRateShow;
 	}
 }

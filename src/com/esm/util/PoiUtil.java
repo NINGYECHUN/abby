@@ -59,7 +59,7 @@ public class PoiUtil {
         exportExcel("sheet1", null, null, dataset, out, "yyyy-MM-dd", null, headerContent);
     }*/
 	
-	private static DecimalFormat    df = new DecimalFormat("0"); 
+	private static DecimalFormat  df = new DecimalFormat("0.##"); 
 
     public static void exportExcel(String[] headers,HashMap<String, Object> headerValue, Collection<JSONObject> dataset,List<String> columns,
             OutputStream out, Map<String, Object> styleMap, String headerContent)  throws Exception {

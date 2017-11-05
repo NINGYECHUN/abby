@@ -184,31 +184,71 @@ Ext.onReady(function() {
 				align : 'center',
 				dataIndex : 'id'
 			},{
-				text : "创建时间",
+				text : "订单编号",
 				width : 150,
 				align : 'center',
-				dataIndex : 'createDate'
+				dataIndex : 'orderNo'
 			},{
 				text : "商品名称",
 				width : 150,
 				align : 'center',
 				dataIndex : 'goodsName'
 			},{
-				text : "订单数量",
-				width : 80,
-				align : 'center',
-				dataIndex : 'qty'
-			},
-			{
 				text : "单价",
 				width : 100,
 				align : 'center',
 				dataIndex : 'price'
 			},{
+				text : "付款金额",
+				width : 150,
+				align : 'center',
+				dataIndex : 'payment'
+			},
+			{
+				text : "佣金比率",
+				width : 150,
+				align : 'center',
+				dataIndex : 'commissionRate'
+			},{
+				text : "效果预估",
+				width : 150,
+				align : 'center',
+				dataIndex : 'effectEstimate'
+			},
+			{
+				text : "佣金金额",
+				width : 150,
+				align : 'center',
+				dataIndex : 'commissionAmount'
+			},
+			{
+				text : "媒体名称",
+				width : 150,
+				align : 'center',
+				dataIndex : 'mediaName'
+			},
+			{
+				text : "广告位名称",
+				width : 150,
+				align : 'center',
+				dataIndex : 'adsenseName'
+			},
+			{
 				text : "状态",
 				width : 150,
 				align : 'center',
 				dataIndex : 'status'
+			},
+			{
+				text : "创建时间",
+				width : 150,
+				align : 'center',
+				dataIndex : 'createDate'
+			},{
+				text : "订单数量",
+				width : 80,
+				align : 'center',
+				dataIndex : 'qty'
 			},{
 				text : "收入比率",
 				width : 150,
@@ -220,16 +260,6 @@ Ext.onReady(function() {
 				align : 'center',
 				dataIndex : 'dividedRate'
 			},{
-				text : "付款金额",
-				width : 150,
-				align : 'center',
-				dataIndex : 'payment'
-			},{
-				text : "效果预估",
-				width : 150,
-				align : 'center',
-				dataIndex : 'effectEstimate'
-			},{
 				text : "结算金额",
 				width : 150,
 				align : 'center',
@@ -240,40 +270,20 @@ Ext.onReady(function() {
 				align : 'center',
 				dataIndex : 'incomeEstimate'
 			},{
-				text : "佣金比率",
-				width : 150,
-				align : 'center',
-				dataIndex : 'commissionRate'
-			},{
 				text : "补贴金额",
 				width : 150,
 				align : 'center',
 				dataIndex : 'subsidyAmount'
-			},{
-				text : "订单编号",
-				width : 150,
-				align : 'center',
-				dataIndex : 'orderNo'
 			},{
 				text : "媒体id",
 				width : 150,
 				align : 'center',
 				dataIndex : 'mediaId'
 			},{
-				text : "媒体名称",
-				width : 150,
-				align : 'center',
-				dataIndex : 'mediaName'
-			},{
 				text : "广告位id",
 				width : 150,
 				align : 'center',
 				dataIndex : 'adsenseId'
-			},{
-				text : "广告位名称",
-				width : 150,
-				align : 'center',
-				dataIndex : 'adsenseName'
 			},{
 				text : "导入时间",
 				width : 150,

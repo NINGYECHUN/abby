@@ -25,7 +25,8 @@
     <result column="import_by" jdbcType="BIGINT" property="importBy" />
     <result column="commission_rate_user" jdbcType="DOUBLE" property="commissionRateUser" />
     <result column="create_date_str" jdbcType="VARCHAR" property="createDateStr" />
-    
+    <result column="commission_amount" jdbcType="DOUBLE" property="commissionAmount" />
+     <result column="commission_rate_show" jdbcType="DOUBLE" property="commissionRateShow" />
   </resultMap>
   <sql id="Where_Clause">
     <where>
@@ -134,11 +135,13 @@
     t.adsense_id as adsense_id, 
     t.adsense_name as adsense_name, 
     t.import_date as import_date, 
-    t.import_by as import_by
+    t.import_by as import_by,
+    t.commission_amount as commission_amount
   </sql>
   <select id="queryByMap" parameterType="HashMap" resultMap="BaseResultMap">
     select
 	    <include refid="Base_Column_List" />,
+	    u.commission_rate_show as commission_rate_show,
 	    u.commission_rate as commission_rate_user
     from tt_order t 
     	left join tm_user u on t.media_name=u.account
@@ -170,14 +173,14 @@
       set_amount, income_estimate, commission_rate, 
       subsidy_amount, order_no, media_id, 
       media_name, adsense_id, adsense_name, 
-      import_date, import_by)
+      import_date, import_by,commission_amount)
     values (#{createDate,jdbcType=TIMESTAMP}, #{goodsName,jdbcType=VARCHAR}, #{qty,jdbcType=INTEGER}, 
       #{price,jdbcType=DOUBLE}, #{status,jdbcType=VARCHAR}, #{incomeRate,jdbcType=VARCHAR}, 
       #{dividedRate,jdbcType=VARCHAR}, #{payment,jdbcType=DOUBLE}, #{effectEstimate,jdbcType=DOUBLE}, 
       #{setAmount,jdbcType=DOUBLE}, #{incomeEstimate,jdbcType=DOUBLE}, #{commissionRate,jdbcType=VARCHAR}, 
       #{subsidyAmount,jdbcType=DOUBLE}, #{orderNo,jdbcType=VARCHAR}, #{mediaId,jdbcType=VARCHAR}, 
       #{mediaName,jdbcType=VARCHAR}, #{adsenseId,jdbcType=VARCHAR}, #{adsenseName,jdbcType=VARCHAR}, 
-      #{importDate,jdbcType=TIMESTAMP}, #{importBy,jdbcType=BIGINT})
+      #{importDate,jdbcType=TIMESTAMP}, #{importBy,jdbcType=BIGINT},#{commissionAmount,jdbcType=DOUBLE})
   </insert>
   <select id="countByMap" parameterType="HashMap" resultType="java.lang.Integer">
     select count(*) from tt_order t
@@ -220,7 +223,8 @@
       adsense_id = #{adsenseId,jdbcType=VARCHAR},
       adsense_name = #{adsenseName,jdbcType=VARCHAR},
       import_date = #{importDate,jdbcType=TIMESTAMP},
-      import_by = #{importBy,jdbcType=BIGINT}
+      import_by = #{importBy,jdbcType=BIGINT},
+      commission_amount = #{commissionAmount,jdbcType=DOUBLE}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

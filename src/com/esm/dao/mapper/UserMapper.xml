@@ -14,6 +14,10 @@
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="is_enable" jdbcType="INTEGER" property="isEnable" />
     <result column="gathering_name" jdbcType="INTEGER" property="gatheringName" />
+    <result column="commission_rate_to_parent" jdbcType="DOUBLE" property="commissionRateToParent" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="commission_rate_show" jdbcType="DOUBLE" property="commissionRateShow" />
+    
   </resultMap>
   <sql id="Where_Clause">
     <where>
@@ -21,6 +25,16 @@
       <if test="map.id !=null ">
         <![CDATA[ 
         AND t.id = #{map.id}
+        ]]>
+      </if>
+      <if test="map.isAdmin !=null and map.isAdmin !='' ">
+        <![CDATA[ 
+        AND t.is_admin = #{map.isAdmin}
+        ]]>
+      </if>
+      <if test="map.notEqId !=null and map.notEqId !='' ">
+        <![CDATA[ 
+        AND t.id != #{map.notEqId}
         ]]>
       </if>
       <if test="map.account !=null and map.account !='' ">
@@ -82,7 +96,10 @@
     t.alipay as alipay, 
     t.phone as phone,
     t.is_enable as is_enable,
-    t.gathering_name as gathering_name
+    t.gathering_name as gathering_name,
+    t.commission_rate_to_parent as commission_rate_to_parent,
+    t.parent_id as parent_id,
+    t.commission_rate_show as commission_rate_show
   </sql>
   <select id="queryByMap" parameterType="HashMap" resultMap="BaseResultMap">
     select
@@ -113,12 +130,15 @@
     insert into tm_user (account, password, name, 
       pid, commission_rate, is_admin, 
       last_login_time, alipay, phone,
-      is_enable,gathering_name
+      is_enable,gathering_name,commission_rate_to_parent,parent_id,
+      commission_rate_show
       )
     values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{pid,jdbcType=VARCHAR}, #{commissionRate,jdbcType=DOUBLE}, #{isAdmin,jdbcType=INTEGER}, 
       #{lastLoginTime,jdbcType=TIMESTAMP}, #{alipay,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
-      #{isEnable,jdbcType=INTEGER},#{gatheringName,jdbcType=VARCHAR}
+      #{isEnable,jdbcType=INTEGER},#{gatheringName,jdbcType=VARCHAR},
+      #{commissionRateToParent,jdbcType=DOUBLE}, #{parentId,jdbcType=BIGINT},
+      #{commissionRateShow,jdbcType=DOUBLE}
       )
   </insert>
   <select id="countByMap" parameterType="HashMap" resultType="java.lang.Integer">
@@ -153,7 +173,10 @@
       alipay = #{alipay,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       is_admin = #{isAdmin, jdbcType=INTEGER},
-      gathering_name = #{gatheringName, jdbcType=VARCHAR}
+      gathering_name = #{gatheringName, jdbcType=VARCHAR},
+      commission_rate_to_parent = #{commissionRateToParent, jdbcType=DOUBLE},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      commission_rate_show = #{commissionRateShow, jdbcType=DOUBLE}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

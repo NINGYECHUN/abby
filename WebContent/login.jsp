@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>app</title>
+    <title>云梦阁</title>
     <script type="text/javascript">
         var Ext = Ext || {}; // Ext namespace won't be defined yet...
         // This function is called by the Microloader after it has performed basic

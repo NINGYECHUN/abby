@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONObject;
 import com.esm.dao.WithdrawMoneyDao;
 import com.esm.model.WithdrawMoney;
+import com.esm.service.IncomeService;
 import com.esm.service.WithdrawMoneyService;
 import com.esm.util.ListView;
 import com.esm.util.PageInfo;
@@ -21,6 +22,9 @@ public class WithdrawMoneyServiceImpl implements WithdrawMoneyService{
 	
 	@Resource
 	private WithdrawMoneyDao withdrawMoneyDao;
+	
+	@Resource
+	private IncomeService incomeService;
 
 	@Override
 	public JSONObject add(WithdrawMoney withdrawMoney) throws Exception {
@@ -75,6 +79,10 @@ public class WithdrawMoneyServiceImpl implements WithdrawMoneyService{
 		entity.setRmkAdmin(withdrawMoney.getRmkAdmin());
 		entity.setStatus(status);
 		withdrawMoneyDao.updateByPrimaryKey(entity);
+		
+		if("1".equals(judgeType)) {//通过
+			incomeService.doDeal(entity.getUserId(), entity.getMoneyQty());
+		}
 		return null;
 	}
 	

@@ -21,6 +21,26 @@ public class NumberUtils {
 		}
 		return BigDecimal.valueOf(param).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 	}
+	
+	/**
+	 * 相加
+	 * @param v1
+	 * @param v2
+	 * @return
+	 */
+	public static double add(Double v1, Double v2) {
+		return new BigDecimal(v1.toString()).add(new BigDecimal(v2.toString())).doubleValue();
+	}
+	
+	/**
+	 * 相减
+	 * @param v1
+	 * @param v2
+	 * @return
+	 */
+	public static double subtract(Double v1, Double v2) {
+		return new BigDecimal(v1.toString()).subtract(new BigDecimal(v2.toString())).doubleValue();
+	}
 
 	/**
 	 * 相乘
@@ -30,7 +50,7 @@ public class NumberUtils {
 	 * @return
 	 */
 	public static double multiply(Double v1, Double v2) {
-		return BigDecimal.valueOf(v1).multiply(BigDecimal.valueOf(v2)).doubleValue();
+		return new BigDecimal(v1.toString()).multiply(new BigDecimal(v2.toString())).doubleValue();
 	}
 
 	/**
@@ -40,20 +60,12 @@ public class NumberUtils {
 	 * @param v2
 	 * @return
 	 */
-	public static double divive(Double v1, Double v2) {
-		return BigDecimal.valueOf(v1).divide(BigDecimal.valueOf(v2), 5, RoundingMode.HALF_DOWN).doubleValue();
+	public static double divide(Double v1, Double v2) {
+		return new BigDecimal(v1.toString()).divide(new BigDecimal(v2.toString()), 5, RoundingMode.HALF_DOWN).doubleValue();
 	}
 	
-	/**
-	 * 相除
-	 * 
-	 * @param v1
-	 * @param v2
-	 * @return
-	 */
-	public static double divive2(Double v1, Double v2) {
-		return BigDecimal.valueOf(v1).divide(BigDecimal.valueOf(v2), 10, RoundingMode.HALF_DOWN).doubleValue();
-	}
+	
+	
 
 	public static double ifNull2Zero(Double v) {
 		if (v == null) {
@@ -807,81 +819,6 @@ public class NumberUtils {
 		return sb.toString();
 	}
 	
-	
-	private static final char [] ChineseNum ={'零','壹','贰','叁','肆','伍','陆','柒','捌','玖'};  
-	private static final char [] ChineseUnit={'里','分','角','元','拾','佰','仟','万','拾','佰','仟','亿','拾','佰','仟'};  
-	  
-	/** 
-	 * 返回关于钱的中文式大写数字,支仅持到亿 
-	 * */  
-	public static String arabNumToChineseRMB(int moneyNum){  
-	    String res="";  
-	    int i=3;  
-	    if(moneyNum==0)  
-	        return "零元";  
-	    while(moneyNum>0){  
-	        res=ChineseUnit[i++]+res;  
-	        res=ChineseNum[moneyNum%10]+res;  
-	        moneyNum/=10;  
-	    }  
-	    return res.replaceAll("零[拾佰仟]", "零")  
-	            .replaceAll("零+亿", "亿").replaceAll("零+万", "万")  
-	            .replaceAll("零+元", "元").replaceAll("零+", "零");  
-	              
-	}  
-	  
-	/** 
-	 * 返回关于钱的中文式大写数字,支仅持到亿 
-	 * @throws Exception  
-	 * */  
-	private static String arabNumToChineseRMB(String moneyNum) throws Exception{  
-	    String res="";  
-	    int i=3;  
-	    int len=moneyNum.length();  
-	    if(len>12){  
-	        throw new Exception("Number too large!");  
-	    }  
-	    if("0".equals(moneyNum))  
-	        return "零元";  
-	    //System.out.println(moneyNum);  
-	    for(len--;len>=0;len--){  
-	        res=ChineseUnit[i++]+res;  
-	        int num=Integer.parseInt(moneyNum.charAt(len)+"");  
-	        res=ChineseNum[num]+res;  
-	    }  
-	    return res.replaceAll("零[拾佰仟]", "零")  
-	            .replaceAll("零+亿", "亿").replaceAll("零+万", "万")  
-	            .replaceAll("零+元", "元").replaceAll("零+", "零");  
-	              
-	}  
-	/** 
-	 * 整数位支持12位,到仟亿 
-	 * 支持到小数点后3位,如果大于3位,那么会四舍五入到3位 
-	 * @throws Exception  
-	 * */  
-	public static String arabNumToChineseRMB(double moneyNum) throws Exception{  
-	    String res="";  
-	    String money=String.format("%.3f",moneyNum);  
-	    //System.out.println(money);  
-	    int i=0;  
-	    if(moneyNum==0.0)  
-	        return "零元";  
-	    String inte = money.split("\\.")[0];  
-	    int deci=Integer.parseInt(money.split("\\.")[1].substring(0, 3));  
-	    while(deci>0){  
-	        res=ChineseUnit[i++]+res;  
-	        res=ChineseNum[deci%10]+res;  
-	        deci/=10;  
-	    }  
-	    res=res.replaceAll("零[里分角]", "零");  
-	    if(i<3)  
-	        res="零"+res;  
-	    res=res.replaceAll("零+", "零");  
-	    if(res.endsWith("零"))  
-	        res=res.substring(0, res.length()-1);  
-	    return arabNumToChineseRMB(inte)+res;  
-	}
-	
 	/**
 	 * 数字转换成千分位的数字,带￥符号.
 	 * @param str
@@ -920,5 +857,39 @@ public class NumberUtils {
 		}else{
 			return new BigDecimal(num.toString()).longValue();
 		}
+	}
+	
+	/**
+	 * 对象类型转成Double.
+	 * @param num
+	 * @return
+	 */
+	public static Double objectToDouble(Object num){
+		if(StringUtil.isEmpty(num)){
+			return 0d;
+		}else{
+			return new BigDecimal(num.toString()).doubleValue();
+		}
+	}
+	
+	/**
+	 * null转成0.
+	 * @param num
+	 * @return
+	 */
+	public static Double nullTo0(Double num) {
+		if(num == null) {
+			num = 0d;
+		}
+		return num;
+	}
+	
+	/**
+	 * double保留两位小数.
+	 * @param value
+	 * @return
+	 */
+	public static Double keep2Decimal(Double value) {
+		return new BigDecimal(value.toString()).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
 	}
 }

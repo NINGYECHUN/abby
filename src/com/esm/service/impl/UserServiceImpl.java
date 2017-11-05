@@ -48,6 +48,12 @@ public class UserServiceImpl implements UserService{
 		entity.setName(user.getName());
 		entity.setPhone(user.getPhone());
 		entity.setPid(user.getPid());
+		entity.setCommissionRateToParent(user.getCommissionRateToParent());
+		if(user.getParentId() != null && user.getParentId() < 0) {
+			user.setParentId(null);
+		}
+		entity.setParentId(user.getParentId());
+		entity.setCommissionRateShow(user.getCommissionRateShow());
 		userDao.updateByPrimaryKey(entity);
 		return rs;
 	}
@@ -135,5 +141,18 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User getUserById(Long userId){
 		return userDao.selectByPrimaryKey(userId);
+	}
+	
+	@Override
+	public List<User> selectByMap(Map<String,Object> condition){
+		List<User> list = userDao.selectByMap(condition);
+		String needWu = (String) condition.get("needWu");
+		if("true".equals(needWu)) {
+			User user = new User();
+			user.setId(-1L);
+			user.setAccount("无");
+			list.add(user);
+		}
+		return list;
 	}
 }

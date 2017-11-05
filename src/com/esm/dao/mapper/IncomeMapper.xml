@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esm.dao.IncomeDao">
+  <resultMap id="BaseResultMap" type="com.esm.model.Income">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="amount" jdbcType="DOUBLE" property="amount" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+  </resultMap>
+  <sql id="Where_Clause">
+    <where>
+       1=1 
+      <if test="map.id !=null  and map.id !='' ">
+        <![CDATA[ 
+        AND t.id = #{map.id}
+        ]]>
+      </if>
+      <if test="map.userId !=null and map.userId !='' ">
+        <![CDATA[ 
+        AND t.user_id = #{map.userId}
+        ]]>
+      </if>
+      <if test="map.type !=null and map.type !='' ">
+        <![CDATA[ 
+        AND t.type = #{map.type}
+        ]]>
+      </if>
+      <if test="map.typeListIn2And4 == 'true' ">
+        <![CDATA[ 
+        AND t.type in (2,4)
+        ]]>
+      </if>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    t.id as id, 
+    t.user_id as user_id, 
+    t.type as type, 
+    t.amount as amount
+  </sql>
+  <select id="queryByMap" parameterType="HashMap" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />,
+    u.account as account
+    from tt_income t 
+    	left join tm_user u on t.user_id = u.id
+    <if test="_parameter != null">
+      <include refid="Where_Clause" />
+    </if>
+    <if test="map.account !=null and map.account !='' ">
+        <![CDATA[ 
+        AND UPPER(u.account) like trim(UPPER(CONCAT('%',#{map.account},'%')))
+        ]]>
+     </if>
+    <if test="map.orderByClause != null">
+      order by ${map.orderByClause}
+    </if>
+    <if test="map.orderByClause == null">
+      order by t.id DESC 
+    </if>
+    limit #{page.start},#{page.limit}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tt_income t
+    where t.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tt_income
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.esm.model.Income" useGeneratedKeys="true">
+    insert into tt_income (user_id, type, amount
+      )
+    values (#{userId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{amount,jdbcType=DOUBLE}
+      )
+  </insert>
+  <select id="countByMap" parameterType="HashMap" resultType="java.lang.Integer">
+    select count(*) from tt_income t
+    	left join tm_user u on t.user_id = u.id
+    <if test="_parameter != null">
+      <include refid="Where_Clause" />
+    </if>
+    <if test="map.account !=null and map.account !='' ">
+        <![CDATA[ 
+        AND UPPER(u.account) like trim(UPPER(CONCAT('%',#{map.account},'%')))
+        ]]>
+     </if>
+  </select>
+  <select id="selectByMap" parameterType="HashMap" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tt_income t
+    <if test="_parameter != null">
+      <include refid="Where_Clause" />
+    </if>
+    <if test="map.orderByClause != null">
+      order by ${map.orderByClause}
+    </if>
+    <if test="map.orderByClause == null">
+      order by t.id DESC 
+    </if>
+  </select>
+  
+  <select  id="sumByGroup" parameterType="HashMap" resultType="HashMap">
+ 	SELECT 
+ 		u.account, group_concat(concat(i.type, '_', i.amount)) as amountList
+		FROM tt_income i LEFT JOIN tm_user u ON i.user_id = u.id 
+	where 1=1 	
+	<if test="map.account !=null and map.account !='' ">
+        <![CDATA[ 
+        AND UPPER(u.account) like trim(UPPER(CONCAT('%',#{map.account},'%')))
+        ]]>
+     </if>
+     <if test="map.userId !=null and map.userId !='' ">
+        <![CDATA[ 
+        AND i.user_id = #{map.userId}
+        ]]>
+     </if>
+	GROUP BY i.user_id 
+	limit #{page.start},#{page.limit}
+  </select>
+  
+    <select id="countByGroup" parameterType="HashMap" resultType="java.lang.Integer">
+   select count(1) from (
+    SELECT 
+ 		u.account, group_concat(concat(i.type, '_', i.amount)) as amountList
+		FROM tt_income i LEFT JOIN tm_user u ON i.user_id = u.id 
+	where 1=1 	
+	<if test="map.account !=null and map.account !='' ">
+        <![CDATA[ 
+        AND UPPER(u.account) like trim(UPPER(CONCAT('%',#{map.account},'%')))
+        ]]>
+     </if>
+     <if test="map.userId !=null and map.userId !='' ">
+        <![CDATA[ 
+        AND i.user_id = #{map.userId}
+        ]]>
+     </if>
+	GROUP BY i.user_id ) t1
+  </select>
+  
+  <update id="updateByPrimaryKey" parameterType="com.esm.model.Income">
+    update tt_income
+    set user_id = #{userId,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -129,10 +129,13 @@ Ext.onReady(function() {
 				          	{name : 'adsenseName',type : 'string'},
 				          	{name : 'importDate',type : 'string'},
 				          	{name : 'importBy',type : 'string'},
-				          	{name : 'commissionRateUser',type : 'string'}
+				          	{name : 'commissionRateUser',type : 'string'},
+				          	{name:'commissionRateShow',type:'string'},
+				          	{name:'effectEstimateUser',type:'auto'},
+				          	{name:'commissionAmount',type:'auto'}
 				          ]
 			});
-	// 工令数据源
+	
 	var homePageStore = Ext.create('Ext.data.Store', {
 				extend : 'Ext.data.Store',
 				model : 'homePageModel',
@@ -155,7 +158,7 @@ Ext.onReady(function() {
 				},
 				groupField : "createDateStr",//默认以班级分组
 				groupDir:'desc',
-				autoLoad : true
+				autoLoad : false
 			});
 		addStoreLoadFailListener(homePageStore);
 
@@ -183,41 +186,56 @@ Ext.onReady(function() {
 				align : 'center',
 				dataIndex : 'orderNo'
 			},{
-				text : "创建时间",
-				width : 150,
-				align : 'center',
-				dataIndex : 'createDate'
-			},{
 				text : "商品名称",
 				width : 150,
 				align : 'center',
 				dataIndex : 'goodsName'
 			},{
-				text : "订单数量",
-				width : 80,
-				align : 'center',
-				dataIndex : 'qty'
-			},
-			{
 				text : "单价",
 				width : 100,
 				align : 'center',
 				dataIndex : 'price'
 			},{
+				text : "付款金额",
+				width : 150,
+				align : 'center',
+				dataIndex : 'payment'
+			},
+			{
+				text : "佣金比率",
+				width : 150,
+				align : 'center',
+				dataIndex : 'commissionRateShow'
+			},
+			{
+				text : "效果预估",
+				width : 150,
+				align : 'center',
+				dataIndex : 'effectEstimateUser'
+			},
+			{
+				text : "佣金金额",
+				width : 150,
+				align : 'center',
+				dataIndex : 'commissionAmountUser'
+			},
+			{
+				text : "媒体名称",
+				width : 150,
+				align : 'center',
+				dataIndex : 'mediaName'
+			},
+			{
+				text : "广告位名称",
+				width : 150,
+				align : 'center',
+				dataIndex : 'adsenseName'
+			},
+			{
 				text : "状态",
 				width : 150,
 				align : 'center',
 				dataIndex : 'status'
-			},{
-				text : "收入比率",
-				width : 150,
-				align : 'center',
-				dataIndex : 'incomeRate'
-			},{
-				text : "分成比率",
-				width : 150,
-				align : 'center',
-				dataIndex : 'dividedRate'
 			},{
 				text : "付款金额",
 				width : 150,
@@ -287,13 +305,96 @@ Ext.onReady(function() {
 		 }
 	});
 	
+	Ext.define(pageId+"displayIncome",{
+		extend:'Ext.form.Panel',
+		layout:'column',
+		width:'100%',
+		border:0,
+		defaults:{
+			xtype:'displayfield',
+			columnWidth:.24,
+			width:80,
+			fieldStyle:'text-align:center;font-size:20;font-weight:bold;color:#DAA520;margin-top:10px;',
+			plugins: 'responsive',
+			responsiveConfig: {  
+		        tall: {
+		        	margin:2,
+		        	height:40
+		        },
+		        wide:{
+		        	margin:10,
+		        	height:80
+		        }
+		    }
+		},
+		items:[{
+			//fieldLabel:'预期收入',
+			name:'expectIncome',
+			style:'background:#FFEBCD;'
+		},{
+			//fieldLabel:'预期收入(下级代理提供)',
+			name:'expectIncomeProvide',
+			style:'background:#EAEAEA;'
+		},{
+			//fieldLabel:'可结算收入',
+			name:'settleIncome',
+			style:'background:#F0F8FF;'
+		},{
+			//fieldLabel:'可结算收入(下级代理提供)',
+			name:'settleIncomeProvide',
+			style:'background:#98FB98;'
+		}],
+		 initComponent : function() {  
+			 var me = this;
+			 Ext.Ajax.request({
+					url:baseUrl + '/income/selectCurrUserIncome',
+					method:"POST",
+					success:function(response){
+						if(response.responseText != ''){
+							var res = Ext.JSON.decode(response.responseText);
+							if(res.rows != null && res.rows.length == 1){
+								var data = res.rows[0];
+								var expectIncome = nullTo0(data.expectIncome);
+								var settleIncome = nullTo0(data.settleIncome);
+								var expectIncomeProvide = nullTo0(data.expectIncomeProvide);
+								var settleIncomeProvide = nullTo0(data.settleIncomeProvide);
+								
+								var height = window.screen.height;
+								var width = window.screen.width;
+								if(width > height){
+									expectIncome = '<font color="grey">预期收入</font></br></br>'+expectIncome;
+									settleIncome = '<font color="grey">可结算收入</font></br></br>'+settleIncome;
+									expectIncomeProvide = '<font color="grey">预期收入(下级代理分成)</font></br></br>'+expectIncomeProvide;
+									settleIncomeProvide = '<font color="grey">可结算收入(下级代理分成)</font></br></br>'+settleIncomeProvide;
+								}
+								data.expectIncome = expectIncome;
+								data.settleIncome = settleIncome;
+								data.expectIncomeProvide = expectIncomeProvide;
+								data.settleIncomeProvide = settleIncomeProvide;
+								
+								me.getForm().setValues(data);
+							}
+						}
+					},
+					failure:function(response){
+						Ext.Msg.alert("提示","系统异常！");
+					}
+				});
+			 
+			 this.callParent(arguments);  
+		 }
+	});
+	
 	var homePageGrid = Ext.create(pageId);
 	Ext.define("Abby.app.home.homePage",{
 		extend:'Ext.panel.Panel',
 		layout:'fit',
-		tbar:Ext.create(pageId+"SearchPanel"),
+		tbar:[
+			Ext.create(pageId+"displayIncome")
+		],
 		items:[homePageGrid],
 		 initComponent : function() {  
+			 homePageStore.loadPage(1);
 			 this.callParent(arguments);  
 		 }
 	});

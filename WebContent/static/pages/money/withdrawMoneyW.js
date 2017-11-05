@@ -61,6 +61,7 @@ Ext.onReady(function() {
 								{
 									xtype:'numberfield',
 									allowBlank:false,
+									readOnly:true,
 									minValue:0,
 									fieldLabel:'提现金额',
 									name:'moneyQty'
@@ -74,6 +75,25 @@ Ext.onReady(function() {
 				}]
 			});
 			this.mainForm = mainForm;
+			
+			 Ext.Ajax.request({
+					url:baseUrl + '/income/selectCurrUserIncome',
+					method:"POST",
+					success:function(response){
+						if(response.responseText != ''){
+							var res = Ext.JSON.decode(response.responseText);
+							if(res.rows != null && res.rows.length == 1){
+								var settleIncomeTotal = res.rows[0].settleIncomeTotal;
+								mainForm.getForm().findField('moneyQty').setValue(settleIncomeTotal);
+							}else{
+								Ext.Msg.alert("提示","操作失败！"+res.msg);
+							}
+						}
+					},
+					failure:function(response){
+						Ext.Msg.alert("提示","系统异常！");
+					}
+				});
 
 			// 保存操作
 			var saveButton = Ext.create("Ext.button.Button",{

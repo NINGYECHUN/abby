@@ -1,5 +1,6 @@
 package com.esm.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -193,6 +194,25 @@ public class UserController {
 			jsonObj.put("success", success);
 		}
 		return jsonObj;
+	}
+	
+	/**
+	 * 查询所有用户信息. 
+	 * @param request 请求
+	 * @param response 返回
+	 * @return 返回结果
+	 */
+	@RequestMapping(value = "/selectByMap")
+	@ResponseBody
+	public JSONObject selectByMap(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> condition = TransforUtil.transRMapToMap(request.getParameterMap());
+		// 获取查询条件
+		condition.put("needWu", "true");
+		List<User> list = userService.selectByMap(condition);
+		JSONObject object = new JSONObject();
+		object.put("dataList", MethodUtil.fromArr(list));
+		return object;
 	}
 
 }

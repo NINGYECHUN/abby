@@ -34,6 +34,25 @@ Ext.onReady(function(){
 						        {
 						        	xtype:'button',
 						        	height:40,
+						        	plugins: 'responsive',
+									responsiveConfig: {  
+								        tall: {
+								        },
+								        wide:{
+								        	text:'<font size=2>修改密码</font>'
+								        }
+									  },
+						        	columnWidth:0.3,
+						        	iconCls : 'fa fa-key',
+						        	width:'100%',
+						        	itemId:'changePasswordItem',
+						        	handler:function(button,e){
+						        		menuTreeHandler(button,e,'修改密码');
+						        	}
+						        },
+						        {
+						        	xtype:'button',
+						        	height:40,
 						        	iconCls : 'fa fa-users',
 						        	plugins: 'responsive',
 									responsiveConfig: {  
@@ -84,6 +103,24 @@ Ext.onReady(function(){
 						        	itemId:'orderImportItem',
 						        	handler:function(button,e){
 						        		menuTreeHandler(button,e,'订单管理');
+						        	}
+						        },{
+						        	xtype:'button',
+						        	iconCls : 'fa fa-cart-plus',
+						        	height:40,
+						        	plugins: 'responsive',
+									responsiveConfig: {  
+								        tall: {
+								        },
+								        wide:{
+								        	text:'<font size=2>收入查看</font>'
+								        }
+									},
+						        	width:'100%',
+						        	margin:'5 0 0 0',
+						        	itemId:'incomeViewItem',
+						        	handler:function(button,e){
+						        		menuTreeHandler(button,e,'收入查看');
 						        	}
 						        }
 						        ]

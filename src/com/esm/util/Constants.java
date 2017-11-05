@@ -61,4 +61,10 @@ public class Constants {
 	private static void setTbUrl(String tbUrl) {
 		Constants.tbUrl = tbUrl;
 	}
+	
+	public static final String INCOME_STATUS_PAID="订单付款";
+	
+	public static final String INCOME_STATUS_SETTLEMENT="订单结算";
+	
+	public static final String INCOME_STATUS_CANCEL="订单失效";
 }

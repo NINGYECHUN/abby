@@ -61,7 +61,7 @@ public class IncomeServiceImpl implements IncomeService{
 		}else {
 			throw new Exception("订单类型不能识别！");
 		}
-		doAllocation(user, commissionAmount, type);
+		doAllocation(user, commissionAmount, type, true);
 		return json;
 	}
 	
@@ -70,9 +70,10 @@ public class IncomeServiceImpl implements IncomeService{
 	 * @param user
 	 * @param commissionAmount
 	 * @param type
+	 * @param isNeedToShareWithAbby 代理商是否需要与abby分钱
 	 * @throws Exception
 	 */
-	public void doAllocation(User user,Double commissionAmount,Integer type) throws Exception {
+	public void doAllocation(User user,Double commissionAmount,Integer type,Boolean isNeedToShareWithAbby) throws Exception {
 		
 		//找用户对应的收入数据.
 		Map<String,Object> condition = new HashMap<String,Object>();
@@ -114,11 +115,16 @@ public class IncomeServiceImpl implements IncomeService{
 				type =4;//那么就变成下级用户的可结算收入
 			}
 			Double newAmount = NumberUtils.multiply(commissionAmount, NumberUtils.divide(commissionRateToParent, 100d));
-			doAllocation(parent, newAmount, type);
+			doAllocation(parent, newAmount, type,false);
 		}
 		
 		//计算分给该用户的钱
-		Double newAmount = NumberUtils.multiply(commissionAmount, NumberUtils.divide(commissionRate,100d));
+		Double newAmount = null;
+		if(isNeedToShareWithAbby) {
+			newAmount = NumberUtils.multiply(commissionAmount, NumberUtils.divide(commissionRate,100d));
+		}else {
+			newAmount =commissionAmount;
+		}
 		income.setAmount(NumberUtils.add(NumberUtils.nullTo0(income.getAmount()), newAmount));
 		incomeDao.updateByPrimaryKey(income);
 	}

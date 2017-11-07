@@ -150,6 +150,11 @@ public class Order {
     private Double commissionRateShow;
     
     /**
+     * 分给上级代理的百分比.
+     */
+    private Double commissionRateToParent;
+    
+    /**
     获取id(主键id)的当前值.
     @return 得到的id的值
     */
@@ -531,5 +536,13 @@ public class Order {
 
 	public void setCommissionRateShow(Double commissionRateShow) {
 		this.commissionRateShow = commissionRateShow;
+	}
+
+	public Double getCommissionRateToParent() {
+		return commissionRateToParent;
+	}
+
+	public void setCommissionRateToParent(Double commissionRateToParent) {
+		this.commissionRateToParent = commissionRateToParent;
 	}
 }

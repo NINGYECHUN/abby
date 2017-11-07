@@ -27,6 +27,8 @@
     <result column="create_date_str" jdbcType="VARCHAR" property="createDateStr" />
     <result column="commission_amount" jdbcType="DOUBLE" property="commissionAmount" />
      <result column="commission_rate_show" jdbcType="DOUBLE" property="commissionRateShow" />
+     <result column="commission_rate_to_parent" jdbcType="DOUBLE" property="commissionRateToParent" />
+     
   </resultMap>
   <sql id="Where_Clause">
     <where>
@@ -142,7 +144,8 @@
     select
 	    <include refid="Base_Column_List" />,
 	    u.commission_rate_show as commission_rate_show,
-	    u.commission_rate as commission_rate_user
+	    u.commission_rate as commission_rate_user,
+	    u.commission_rate_to_parent as commission_rate_to_parent
     from tt_order t 
     	left join tm_user u on t.media_name=u.account
     <if test="_parameter != null">

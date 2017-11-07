@@ -105,7 +105,9 @@ public class OrderServiceImpl implements OrderService{
 		Double commissionRateUser = null;
 		for(Order order: list) {
 			commissionRateUser = order.getCommissionRateUser();
-			
+			if(order.getCommissionRateToParent() != null) {
+				commissionRateUser = NumberUtils.subtract(commissionRateUser, order.getCommissionRateToParent());
+			}
 			if(commissionRateUser != null) {
 				commissionRateUser = NumberUtils.divide(commissionRateUser,100d);
 				order.setEffectEstimateUser(NumberUtils.keep2Decimal(NumberUtils.multiply(order.getEffectEstimate(), commissionRateUser)));
